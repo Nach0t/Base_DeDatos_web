@@ -1,6 +1,6 @@
 # Base_DeDatos_web
 
-###Integrantes
+### Integrantes
 * Ignacio Rehbein
 * Claudio Diaz
 * Vicente Quintanilla
