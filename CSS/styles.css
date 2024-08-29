@@ -1,0 +1,18 @@
+:root {
+  --White: #ffffff;
+  --Black: #212121;
+  --fondo: #252424;
+  --text: 1.8rem;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: var(--fondo);
+  font-family: fredoka, sans-serif;
+  font-size: 16px;
+  color: var(--White);
+  font-family: "Fredoka", sans-serif;
+}
