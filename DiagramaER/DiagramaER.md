@@ -70,7 +70,6 @@ Curso --o{ Registro_notas : tiene
 
 ' Relación entre Estudiante y Registro_notas (1 a N)
 Estudiante --o{ Registro_notas : tiene
-```
 
 ' Relación entre Curso y Registro_asistencias (1 a N)
 Curso --o{ Registro_asistencias : tiene
@@ -79,3 +78,4 @@ Curso --o{ Registro_asistencias : tiene
 Estudiante ||--o{ Registro_asistencias : tiene
 
 @enduml
+```
