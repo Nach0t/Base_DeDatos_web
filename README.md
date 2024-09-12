@@ -35,7 +35,7 @@ rootero/
   │   └── normalize.css
   │
   ├── JAVASCRIPT/
-  │   ├── main.js
+  │   ├── translation.js
   │   └── theme.js
   │
   └── index.html
