@@ -1,0 +1,17 @@
+{
+  "home": "Inicio",
+  "application": "Aplicación",
+  "about": "Nosotros",
+  "contact": "Contacto",
+  "title": "Qué Hace y Cómo Funca:",
+  "titledescription": "Este sitio web es un sistema para analizar y almacenar calificaciones. Ayuda a los profesores y estudiantes a monitorear el rendimiento y proporciona alertas a los estudiantes si sus puntuaciones caen   por debajo de un umbral determinado.",
+  "techTitle": "Tecnologías Utilizadas:",
+  "techItems": {
+    "HTML": "HTML",
+    "CSS": "CSS",
+    "JavaScript": "JavaScript"
+  },
+  "howItWorks": "Cómo Funciona:",
+  "howItWorksDescription": "si mas wna que la mamá de claudio",
+  "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. Todos los derechos reservados."
+}

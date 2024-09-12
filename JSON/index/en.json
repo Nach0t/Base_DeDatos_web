@@ -1,0 +1,18 @@
+{
+  "home": "Home",
+  "application": "Application",
+  "about": "About",
+  "contact": "Contact",
+  "title": "What It Does and How It Works:",
+  "titledescription": "This website is a system for analyzing and storing grades. It helps teachers and students monitor performance and provides alerts to students if their scores fall below a certain threshold.",
+  "techTitle": "Technologies Used:",
+  "techItems": {
+    "HTML": "HTML",
+    "CSS": "CSS",
+    "JavaScript": "JavaScript"
+  },
+  "howItWorks": "How it Works:",
+  "howItWorksDescription": "yes" ,
+
+  "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. All rights reserved."
+}

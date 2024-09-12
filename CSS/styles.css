@@ -1,18 +1,257 @@
 :root {
   --White: #ffffff;
+  /* White color */
   --Black: #212121;
-  --fondo: #252424;
+  /* Black color */
+  --fondo: #ffffff;
+  /* Background color for light mode */
+  --text-color: var(--Black);
+  /* Text color for light mode */
+  --nav-bg: #333333;
+  /* Background color for navigation bars */
   --text: 1.8rem;
+  /* Font size for text elements in navigation */
+  --form-bg: #ffffff;
+  /* Background color for form in light mode */
+  --form-text: #000000;
+  /* Text color for form in light mode */
+}
+
+body.dark-mode {
+  --fondo: #252424;
+  /* Background color for dark mode */
+  --text-color: var(--White);
+  /* Text color for dark mode */
+  --form-bg: #333333;
+  /* Background color for form in dark mode */
+  --form-text: var(--White);
+  /* Text color for form in dark mode */
 }
 
 html {
   font-size: 62.5%;
+  /* Base font size (16px = 1rem) */
 }
 
 body {
   background-color: var(--fondo);
-  font-family: fredoka, sans-serif;
-  font-size: 16px;
-  color: var(--White);
+  /* Sets the background color of the body */
   font-family: "Fredoka", sans-serif;
+  /* Font family for the text */
+  font-size: 16px;
+  /* Base font size for body text */
+  color: var(--text-color);
+  /* Text color */
+  transition: background-color 0.5s, color 0.5s;
+  /* Smooth transition for color changes */
+}
+
+nav {
+  background-color: var(--nav-bg);
+  /* Background color of the navigation bar */
+  padding: 1rem;
+  /* Padding inside the navigation bar */
+  border-radius: 0.5rem;
+  /* Rounded corners for the navigation bar */
+  margin-bottom: 2rem;
+  /* Space below the navigation bar */
+  display: flex;
+  /* Aligns items horizontally */
+  align-items: center;
+  /* Centers items vertically */
+  justify-content: space-between;
+  /* Spaces out items in the navigation */
+}
+
+nav ul {
+  list-style: none;
+  /* Removes default list bullets */
+  display: flex;
+  /* Aligns list items horizontally */
+  gap: 2rem;
+  /* Space between the navigation links */
+  padding: 0;
+  /* Removes default padding */
+  margin: 0 0 0 2rem;
+  /* Adds margin to the left side of the ul */
+}
+
+nav a {
+  color: var(--White);
+  /* Text color of the navigation links */
+  text-decoration: none;
+  /* Removes the underline from links */
+  font-size: var(--text);
+  /* Font size for navigation links */
+}
+
+nav a:hover {
+  text-decoration: underline;
+  /* Underline the link text on hover */
+}
+
+footer {
+  background-color: var(--nav-bg);
+  /* Background color for the footer */
+  color: var(--White);
+  /* Text color */
+  text-align: center;
+  /* Center-align the text */
+  padding: 1rem;
+  /* Padding around the text */
+  border-top: 1px solid var(--White);
+  /* Optional: Adds a border at the top of the footer */
+  margin-top: 2rem;
+  /* Space above the footer */
+}
+
+footer p {
+  margin: 0;
+  /* Removes default margin */
+  font-size: 1rem;
+  /* Font size for the footer text */
+}
+
+#theme-icon {
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  /* Aligns the theme icon to the right */
+}
+
+#logo {
+  width: 150px;
+  height: 80px;
+  object-fit: contain;
+  /* Ensures the logo maintains its size and doesn't affect layout */
+}
+
+.form-container {
+  background-color: var(--form-bg);
+  color: var(--form-text);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #cccccc;
+  border-radius: 0.25rem;
+  font-size: 1.6rem;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--nav-bg);
+  color: var(--White);
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+  background-color: #444444;
+}
+
+
+
+
+
+
+
+
+/* Estilos para la sección de tecnologías */
+#tech-used {
+  margin: 2rem 0;
+}
+
+#tech-used h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 250px;
+  text-align: center;
+}
+
+/* Estilos para cada tecnología */
+.tech-item-HTML {
+  background-color: #f16529;
+}
+
+.tech-item-CSS {
+  background-color: #2965f1;
+}
+
+.tech-item-JS {
+  background-color: #f7df1e;
+}
+
+.tech-item img {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+}
+
+/* Aumenta el tamaño del logo de CSS */
+.tech-item-CSS img {
+  width: 85px;
+  height: 85px;
+}
+
+.tech-item p {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #000000d6;
+  /* Cambia el color del texto a negro */
+}
+
+.Diagram.Er {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.Diagram.Er img {
+  max-width: 80%;
+  height: auto;
+  border: 2px solid #ccc;
+  border-radius: 8px;
 }

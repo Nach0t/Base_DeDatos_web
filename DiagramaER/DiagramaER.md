@@ -1,4 +1,3 @@
-```plaintext
 @startuml
 
 entity "Universidad" {
@@ -78,4 +77,3 @@ Curso --o{ Registro_asistencias : tiene
 Estudiante ||--o{ Registro_asistencias : tiene
 
 @enduml
-```
