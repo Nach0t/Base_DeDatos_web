@@ -12,10 +12,8 @@ rootero/
   ├── HTML/
   │   ├── application.html
   │   ├── about.html
-  │   ├── contact.html
-  │   └── AUTH/ 
-  │       ├── login.html
-  │       └── register.html
+  │   └── contact.html
+  │   
   │
   │
   ├── PICTURE/
