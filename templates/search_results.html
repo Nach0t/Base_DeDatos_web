@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Results</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='CSS/styles.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Search Results</h1>
+
+    <h2>Directores</h2>
+    <ul>
+      {% for director in results.directores %}
+      <li>
+        {{ director.nombre }} {{ director.apellido }} - {{ director.carrera }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h2>Profesores</h2>
+    <ul>
+      {% for profesor in results.profesores %}
+      <li>{{ profesor.nombre }} {{ profesor.apellido }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Alumnos</h2>
+    <ul>
+      {% for alumno in results.alumnos %}
+      <li>{{ alumno.nombre }} {{ alumno.apellido }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Notas</h2>
+    <ul>
+      {% for nota in results.notas %}
+      <li>
+        {{ nota.nombre }} {{ nota.apellido }} - {{ nota.nombre }}: {{ nota.nota
+        }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <a href="/">Back to Home</a>
+  </body>
+</html>

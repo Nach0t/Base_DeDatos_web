@@ -36,15 +36,21 @@ entity "Registro_notas" {
   +ID: int
   +id_estudiante: int
   +id_curso: int
-  +nota: float[]
+  +nota: float
 }
 
 entity "Registro_asistencias" {
   +ID: int
   +id_estudiante: int
   +id_curso: int
-  +asistencia: boolean[]
+  +asistencia: boolean
 }
+entity "Inscripcion" {
+  +ID: int
+  +fecha_inscripcion: string
+  +aprobacion: boolean   
+}
+
 
 ' Relación entre Universidad y Facultad (1 a N)
 Universidad --o{ Facultad : tiene
@@ -58,22 +64,20 @@ Facultad --o{ Carrera : tiene
 ' Relación entre Carrera y Estudiante (1 a N)
 Carrera --o{ Estudiante : tiene
 
-' Relación entre Estudiante y Curso (N a N)
-Estudiante }o--o{ Curso : Inscribe
-
 ' Relación entre Profesor y Curso (1 a N)
 Profesor --o{ Curso : dicta
 
-' Relación entre Curso y Registro_notas (1 a N)
-Curso --o{ Registro_notas : tiene
+' Relación entre Curso y Inscripcion (1 a N)
+Curso --o{ Inscripcion : tiene
 
-' Relación entre Estudiante y Registro_notas (1 a N)
-Estudiante --o{ Registro_notas : tiene
+' Relación entre Estudiante y Inscripcion (1 a N)
+Estudiante --o{ Inscripcion : tiene
 
-' Relación entre Curso y Registro_asistencias (1 a N)
-Curso --o{ Registro_asistencias : tiene
+' Relacion entre Inscripcion y Registro_notas (1 a N)
+Inscripcion --o{ Registro_notas : tiene
 
-' Relación entre Estudiante y Registro_asistencias (1 a N)
-Estudiante ||--o{ Registro_asistencias : tiene
+' Relacion entre Inscripcion y Registro_asistencias (1 a N)
+Inscripcion --o{ Registro_asistencias : tiene
+
 
 @enduml

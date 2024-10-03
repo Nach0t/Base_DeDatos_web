@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About</title>
+
+    <!-- icon -->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='PICTURE/icons/favicon.ico') }}"
+      type="image/x-icon"
+    />
+
+    <link
+      rel="preload"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="preload"
+      href="{{ url_for('static', filename='css/normalize.css') }}"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/normalize.css') }}"
+    />
+  </head>
+
+  <body>
+    <nav>
+      <img
+        src="{{ url_for('static', filename='PICTURE/icons/log.png') }}"
+        alt="Logo"
+        id="logo"
+      />
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('application') }}">Application</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+      <img
+        id="theme-icon"
+        src="{{ url_for('static', filename='PICTURE/symbols/sun.png') }}"
+        alt="Theme Icon"
+      />
+      <input type="checkbox" id="theme-toggle" />
+    </nav>
+
+    <main>
+      <section>
+        <h2>About Us</h2>
+        <p>
+          We are a group of Computer Science students from University San
+          Sebastian, Chile.
+        </p>
+
+        <h3>Our Team:</h3>
+        <ul>
+          <li>Ignacio Rehbein</li>
+          <p>Expert in .</p>
+          <li>Claudio Diaz</li>
+          <p>Expert in .</p>
+          <li>Vicente Quintanilla</li>
+          <p>No, I´ll win.</p>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        &copy; <span id="currentYear"></span> Chuequito Company. All rights
+        reserved.
+      </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='JAVASCRIPT/theme.js') }}"></script>
+  </body>
+</html>

@@ -7,36 +7,50 @@
 ### Estructura del Proyecto web
 
 ```plaintext
-rootero/
-  │
-  ├── HTML/
-  │   ├── application.html
-  │   ├── about.html
-  │   └── contact.html
-  │   
-  │
-  │
-  ├── PICTURE/
-  │   ├── symbols/
-  │   │   ├── sun.png
-  │   │   ├── mon.png
-  │   │   ├── HTML.pmg
-  │   │   ├── CSS.png
-  │   │   └── JS.png
-  │   │
-  │   └── icons/
-  │       ├── favicon.ico
-  │       └── log.png
-  │
-  ├── CSS/
-  │   ├── styles.css
-  │   └── normalize.css
-  │
-  ├── JAVASCRIPT/
-  │   ├── translation.js
-  │   └── theme.js
-  │
-  └── index.html
+
+/Root
+│
+├── database/                
+│   └── universidad.db
+│
+├── templates/
+│   ├── index.html
+│   ├── application.html 
+│   ├── contact.html
+│   └── about.html
+│
+├── docker/
+│   ├── mysql-data/
+│   └── compose.yml
+│
+├── static/
+│   │
+│   ├── CSS/
+│   │   ├── styles.css
+│   │   └── normalize.css
+│   │
+│   ├── DiagramaER/
+│   │   ├── DiagramaER.md
+│   │   └── PhotoER.png
+│   │
+│   │
+│   ├── JAVASCRIPT/
+│   │   ├── translation.js
+│   │   └── theme.js
+│   │
+│   └── PICTURE/
+│       ├── symbols/
+│       │   ├── sun.png
+│       │   ├── mon.png
+│       │   ├── HTML.png
+│       │   └── CSS.png
+│       │
+│       └── icons/
+│           ├── favicon.ico
+│           └── log.png
+│
+└── app.py
+
 ```
 
 ### Integrantes

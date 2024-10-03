@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application</title>
+
+    <!-- Icon -->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='PICTURE/icons/favicon.ico') }}"
+      type="image/x-icon"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='CSS/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='CSS/normalize.css') }}"
+    />
+  </head>
+
+  <body>
+    <nav>
+      <img
+        src="{{ url_for('static', filename='PICTURE/icons/log.png') }}"
+        alt="Logo"
+        id="logo"
+      />
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('application') }}">Application</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+      <img
+        id="theme-icon"
+        src="{{ url_for('static', filename='PICTURE/symbols/sun.png') }}"
+        alt="Theme Icon"
+      />
+      <input type="checkbox" id="theme-toggle" />
+    </nav>
+
+    <main>
+      <section>
+        <h1>Application Page</h1>
+        <h2>Students</h2>
+
+        <!-- Search Bar -->
+        <form
+          id="search-form"
+          method="GET"
+          action="{{ url_for('application') }}"
+        >
+          <input
+            type="text"
+            id="search-query"
+            name="query"
+            placeholder="Search..."
+            value="{{ query }}"
+          />
+          <button type="submit">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        <div id="search-results">
+          {% if query %}
+          <h2>Results for "{{ query }}"</h2>
+          {% endif %} {% if results %}
+          <div id="results-container">
+            <!-- Displaying Students -->
+            <h3>Students</h3>
+            <ul>
+              {% for student in results['students'] %}
+              <li>{{ student.first_name }} {{ student.last_name }}</li>
+              {% else %}
+              <li>No students found.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Displaying Teachers -->
+            <h3>Teachers</h3>
+            <ul>
+              {% for teacher in results['teachers'] %}
+              <li>{{ teacher.first_name }} {{ teacher.last_name }}</li>
+              {% else %}
+              <li>No teachers found.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Displaying Courses -->
+            <h3>Courses</h3>
+            <ul>
+              {% for course in results['courses'] %}
+              <li>{{ course.name }}</li>
+              {% else %}
+              <li>No courses found.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Displaying Grades -->
+            <h3>Grades</h3>
+            <ul>
+              {% for student_first_name, student_last_name, course_name, grade
+              in results['grades'] %}
+              <li>
+                {{ student_first_name }} {{ student_last_name }} - {{
+                course_name }}: {{ grade }}
+              </li>
+              {% else %}
+              <li>No grades found.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Displaying Faculty Students -->
+            <h3>Students in Faculty</h3>
+            <ul>
+              {% for student in results['faculty_students'] %}
+              <li>{{ student.first_name }} {{ student.last_name }}</li>
+              {% else %}
+              <li>No students found in faculty.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Displaying Faculty Teachers -->
+            <h3>Teachers in Faculty</h3>
+            <ul>
+              {% for teacher in results['faculty_teachers'] %}
+              <li>{{ teacher.first_name }} {{ teacher.last_name }}</li>
+              {% else %}
+              <li>No teachers found in faculty.</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        &copy; <span id="currentYear"></span> Chuequito Company. All rights
+        reserved.
+      </p>
+    </footer>
+
+    <!-- JavaScript files -->
+    <script src="{{ url_for('static', filename='JAVASCRIPT/theme.js') }}"></script>
+  </body>
+</html>
