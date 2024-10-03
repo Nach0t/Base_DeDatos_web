@@ -1,83 +1,83 @@
 @startuml
 
-entity "Universidad" {
+entity "University" {
   +ID: int
-  +nombre: string
+  +name: string
 }
 
-entity "Facultad" {
+entity "Faculty" {
   +ID: int
-  +nombre: string
+  +name: string
 }
 
-entity "Carrera" {
+entity "Degree Program" {
   +ID: int
-  +nombre: string
+  +name: string
 }
 
-entity "Profesor" {
+entity "Professor" {
   +ID: int
-  +nombre: string
-  +apellido: string
+  +firstName: string
+  +lastName: string
 }
 
-entity "Estudiante" {
+entity "Student" {
   +ID: int
-  +nombre: string
-  +apellido: string
+  +firstName: string
+  +lastName: string
 }
 
-entity "Curso" {
+entity "Course" {
   +ID: int
-  +nombre: string
+  +name: string
 }
 
-entity "Registro_notas" {
+entity "Grades_Record" {
   +ID: int
-  +id_estudiante: int
-  +id_curso: int
-  +nota: float
+  +student_id: int
+  +course_id: int
+  +grade: float
 }
 
-entity "Registro_asistencias" {
+entity "Attendance_Record" {
   +ID: int
-  +id_estudiante: int
-  +id_curso: int
-  +asistencia: boolean
-}
-entity "Inscripcion" {
-  +ID: int
-  +fecha_inscripcion: string
-  +aprobacion: boolean   
+  +student_id: int
+  +course_id: int
+  +attendance: boolean
 }
 
+entity "Enrollment" {
+  +ID: int
+  +enrollment_date: string
+  +approval: boolean   
+}
 
-' Relación entre Universidad y Facultad (1 a N)
-Universidad --o{ Facultad : tiene
 
-' Relación entre Facultad y Profesor (1 a N)
-Facultad --o{ Profesor : tiene
+' Relationship between University and Faculty (1 to N)
+University --o{ Faculty : has
 
-' Relación entre Facultad y Carrera (1 a N)
-Facultad --o{ Carrera : tiene
+' Relationship between Faculty and Professor (1 to N)
+Faculty --o{ Professor : has
 
-' Relación entre Carrera y Estudiante (1 a N)
-Carrera --o{ Estudiante : tiene
+' Relationship between Faculty and Degree Program (1 to N)
+Faculty --o{ Degree Program : has
 
-' Relación entre Profesor y Curso (1 a N)
-Profesor --o{ Curso : dicta
+' Relationship between Degree Program and Student (1 to N)
+Degree Program --o{ Student : has
 
-' Relación entre Curso y Inscripcion (1 a N)
-Curso --o{ Inscripcion : tiene
+' Relationship between Professor and Course (1 to N)
+Professor --o{ Course : teaches
 
-' Relación entre Estudiante y Inscripcion (1 a N)
-Estudiante --o{ Inscripcion : tiene
+' Relationship between Course and Enrollment (1 to N)
+Course --o{ Enrollment : has
 
-' Relacion entre Inscripcion y Registro_notas (1 a N)
-Inscripcion --o{ Registro_notas : tiene
+' Relationship between Student and Enrollment (1 to N)
+Student --o{ Enrollment : has
 
-' Relacion entre Inscripcion y Registro_asistencias (1 a N)
-Inscripcion --o{ Registro_asistencias : tiene
+' Relationship between Enrollment and Grades_Record (1 to N)
+Enrollment --o{ Grades_Record : has
 
+' Relationship between Enrollment and Attendance_Record (1 to N)
+Enrollment --o{ Attendance_Record : has
 
 @enduml
