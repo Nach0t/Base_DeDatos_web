@@ -83,6 +83,6 @@ Enrollment --o{ Grades_Record : has
 
 ' Relationship between Enrollment and Attendance_Record (1 to N)
 Enrollment --o{ Attendance_Record : has
-```
 
 @enduml
+```
