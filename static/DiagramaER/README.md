@@ -1,3 +1,7 @@
+The UML code of DiagrammER
+
+```plaintext
+
 @startuml
 
 entity "University" {
@@ -79,5 +83,6 @@ Enrollment --o{ Grades_Record : has
 
 ' Relationship between Enrollment and Attendance_Record (1 to N)
 Enrollment --o{ Attendance_Record : has
+```
 
 @enduml
