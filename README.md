@@ -64,14 +64,13 @@
 * Python 3.8 or higher
 * Docker Desktop
   
-  ```plaintext
+```plaintext
   python -m pip install flask Flask-SQLAlchemy SQLAlchemy mysqlclient PyMySQL
 ```
-
 ## How to Run
+
 ```plaintext
-  cd path/to/database/ 
-  python CreateDataBase.py
+cd path/to/database/ python CreateDataBase.py
 ```
 
 ### Members
