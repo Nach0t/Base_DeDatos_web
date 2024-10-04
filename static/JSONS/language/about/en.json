@@ -1,24 +1,25 @@
 {
   "home": "Home",
   "application": "Application",
-  "about": "About Us",
+  "analysis": "Analysis",
+  "about": "About",
   "contact": "Contact",
   "title": "About Us",
   "description": "We are a group of Computer Science students from University San Sebastian, Chile.",
   "teamTitle": "Our Team:",
-  "teamMembers": [
-    {
+  "team": {
+    "member1": {
       "name": "Ignacio Rehbein",
-      "description": "Expert in ."
+      "expertise": "Expert in ."
     },
-    {
+    "member2": {
       "name": "Claudio Diaz",
-      "description": "Expert in ."
+      "expertise": "Expert in ."
     },
-    {
+    "member3": {
       "name": "Vicente Quintanilla",
-      "description": "Yes, I think."
+      "expertise": "No, I´ll win."
     }
-  ],
+  },
   "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. All rights reserved."
 }

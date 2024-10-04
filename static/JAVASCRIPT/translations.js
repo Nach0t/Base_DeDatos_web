@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function loadTranslations(language) {
   // Build the URL for the JSON file
-  const url = `/static/JSON/index/${language}.json`;
+  const url = `/static/JSONS/language/index/${language}.json`;
 
   fetch(url)
     .then(response => {
@@ -39,3 +39,5 @@ function changeLanguage(language) {
   loadTranslations(language);
 
 }
+
+

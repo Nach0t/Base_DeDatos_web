@@ -1,24 +1,25 @@
 {
   "home": "Inicio",
   "application": "Aplicación",
+  "analysis": "Análisis",
   "about": "Nosotros",
   "contact": "Contacto",
   "title": "Nosotros",
   "description": "Somos un grupo de estudiantes de Ciencias de la Computación de la Universidad San Sebastián, Chile.",
   "teamTitle": "Nuestro Equipo:",
-  "teamMembers": [
-    {
+  "team": {
+    "member1": {
       "name": "Ignacio Rehbein",
-      "description": "Experto en ."
+      "expertise": "Experto en ."
     },
-    {
+    "member2": {
       "name": "Claudio Diaz",
-      "description": "Experto en ."
+      "expertise": "Experto en ."
     },
-    {
+    "member3": {
       "name": "Vicente Quintanilla",
-      "description": "Sí, creo."
+      "expertise": "Sí, creo."
     }
-  ],
+  },
   "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. Todos los derechos reservados."
 }

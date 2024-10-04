@@ -15,21 +15,21 @@
     <!-- CSS -->
     <link
       rel="preload"
-      href="{{ url_for('static', filename='css/styles.css') }}"
+      href="{{ url_for('static', filename='CSS/styles.css') }}"
       as="style"
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}"
+      href="{{ url_for('static', filename='CSS/styles.css') }}"
     />
     <link
       rel="preload"
-      href="{{ url_for('static', filename='css/normalize.css') }}"
+      href="{{ url_for('static', filename='CSS/normalize.css') }}"
       as="style"
     />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/normalize.css') }}"
+      href="{{ url_for('static', filename='CSS/normalize.css') }}"
     />
   </head>
 
@@ -43,6 +43,7 @@
       <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
         <li><a href="{{ url_for('application') }}">Application</a></li>
+        <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
         <li><a href="{{ url_for('about') }}">About</a></li>
         <li><a href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
@@ -64,7 +65,7 @@
       <div class="form-container">
         <h2>Contact Us</h2>
 
-        <form action="{{ url_for('submit_form') }}" method="post">
+        <form action="{{ url_for('contact.submit_form') }}" method="post">
           <label for="name">First Name:</label>
           <input type="text" id="name" name="name" required />
 
