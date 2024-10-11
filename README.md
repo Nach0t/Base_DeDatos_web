@@ -88,7 +88,7 @@ docker pull mysql:9.0.1
 
 ### Second Step: Start the Docker containers
 ```bash
-cd path/to/the/file/zdocker/
+cd path/to/the/file/docker/
 docker compose up
 ```
 
@@ -110,4 +110,5 @@ http://127.0.0.1:5000/
 
 ### Project Members
 * Ignacio Rehbein
-* Claudio
+* Claudio Diaz
+* Vicente Quintanilla
