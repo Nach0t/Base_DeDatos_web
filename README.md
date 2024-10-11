@@ -1,72 +1,22 @@
 # Web Database
 
+## Description:
+
+* This web application manages a university system where you can search and analyze students, teachers, courses, grades and attendance. The application is built with Flask and uses SQLAlchemy to connect to a MySQL database.
+
+## Characteristics:
+
+- **Search for students, teachers and courses**: A dynamic search can be carried out by first name, last name or course in different entities of the database (students, teachers, courses, faculties, etc.).
+  
+- **Grade Record**: Student grades can be consulted, filtered by student or course name.
+
+- **Performance analysis**: The `/analysis` path allows you to perform an analysis of the general performance of a student or in a specific course, displaying a distribution of the results in a graphical way (using the `perform_analysis` function).
+
+- **Contact Form**: Includes a contact page managed through a blueprint (`contact_bp`).
+
+
 ### What You Need to Run the Project:
 
-### Project Structure
-
-```plaintext
-/Root
-├── resources/
-│   └── GanttChart.pdf
-│
-├── database/  
-│   ├── CreateDataBase.py
-│   └── DataBase.py
-│
-├── templates/
-│   ├── index.html
-│   ├── application.html 
-│   ├── contact.html
-│   ├── analysis.html
-│   └── about.html
-│
-├── docker/
-│   ├── mysql-data/
-│   └── compose.yml
-│
-├── function
-│   ├── analysis.py
-│   ├── contact.py
-│   └── application.py
-│
-│
-├── static/
-│   │
-│   ├── CSS/
-│   │   ├── styles.css
-│   │   └── normalize.css
-│   │
-│   ├── DiagramaER/
-│   │   ├── DiagramaER.md
-│   │   └── PhotoER.png
-│   │
-│   ├── JSON /
-│   │   ├── mails/
-│   │   │    └──
-│   │   │
-│   │   └── language/
-│   │          ├── Index/
-│   │          │     ├── en.json
-│   │          │     └── es.json
-│   │          │
-│   │   
-│   ├── JAVASCRIPT/
-│   │   ├── translation.js
-│   │   └── theme.js
-│   │
-│   └── PICTURE/
-│       ├── symbols/
-│       │   ├── sun.png
-│       │   ├── mon.png
-│       │   ├── HTML.png
-│       │   └── CSS.png
-│       │
-│       └── icons/
-│           ├── favicon.ico
-│           └── log.png
-│
-└── app.py
-```
 
 ## Requirements
 * Python 3.8 or higher
@@ -88,13 +38,13 @@ docker pull mysql:9.0.1
 
 ### Second Step: Start the Docker containers
 ```bash
-cd path/to/the/file/docker/
+cd ./docker/
 docker compose up
 ```
 
 ### Third Step: Set up the database
 ```bash
-cd path/to/the/file/database/
+cd ./database/
 python CreateDataBase.py
 ```
 
