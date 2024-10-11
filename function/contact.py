@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from database.DataBase import University, Faculty, Career, Teacher, Student, Course, Enrollment, GradeRecord, AttendanceRecord
 from sqlalchemy import create_engine
 
+
 import os
 import json
 from flask import Blueprint, request, render_template
@@ -12,7 +13,7 @@ from flask import Blueprint, request, render_template
 contact_bp = Blueprint('contact', __name__)
 
 # Directorio para guardar los mails
-json_dir = os.path.join('static/json/mails')
+json_dir = os.path.join('static/jsons/mails')
 os.makedirs(json_dir, exist_ok=True)  # Crea el directorio si no existe
 
 @contact_bp.route('/contact')

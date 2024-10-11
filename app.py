@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from database.DataBase import University, Faculty, Career, Teacher, Student, Course, Enrollment, GradeRecord, AttendanceRecord
 from sqlalchemy import create_engine
-from function.analysis import *
+from function.analysis import perform_analysis
 from function.contact import *
 
 app = Flask(__name__)

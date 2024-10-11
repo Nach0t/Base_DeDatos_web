@@ -6,6 +6,8 @@
 
 ```plaintext
 /Root
+├── resources/
+│   └── GanttChart.pdf
 │
 ├── database/  
 │   ├── CreateDataBase.py
@@ -15,6 +17,7 @@
 │   ├── index.html
 │   ├── application.html 
 │   ├── contact.html
+│   ├── analysis.html
 │   └── about.html
 │
 ├── docker/
@@ -23,6 +26,7 @@
 │
 ├── function
 │   ├── analysis.py
+│   ├── contact.py
 │   └── application.py
 │
 │
@@ -40,8 +44,12 @@
 │   │   ├── mails/
 │   │   │    └──
 │   │   │
-│   │   └── 
-│   │
+│   │   └── language/
+│   │          ├── Index/
+│   │          │     ├── en.json
+│   │          │     └── es.json
+│   │          │
+│   │   
 │   ├── JAVASCRIPT/
 │   │   ├── translation.js
 │   │   └── theme.js
@@ -63,17 +71,43 @@
 ## Requirements
 * Python 3.8 or higher
 * Docker Desktop
-  
-```plaintext
-  python -m pip install flask Flask-SQLAlchemy SQLAlchemy mysqlclient PyMySQL
+* mysql:9.0.1
+
+```bash
+python -m pip install flask Flask-SQLAlchemy SQLAlchemy mysqlclient PyMySQL
 ```
+
 ## How to Run
 
-```plaintext
-cd path/to/database/ python CreateDataBase.py
+### First Step: Open Docker Desktop
+
+#### If you don't have MySQL installed, execute:
+```bash
+docker pull mysql:9.0.1
 ```
 
-### Members
+### Second Step: Start the Docker containers
+```bash
+cd path/to/the/file/zdocker/
+docker compose up
+```
+
+### Third Step: Set up the database
+```bash
+cd path/to/the/file/database/
+python CreateDataBase.py
+```
+
+### Fourth Step: Run Flask
+```bash
+flask run
+```
+
+### Fifth Step: Open in your browser
+```bash
+http://127.0.0.1:5000/
+```
+
+### Project Members
 * Ignacio Rehbein
-* Claudio Diaz
-* Vicente Quintanilla
+* Claudio
