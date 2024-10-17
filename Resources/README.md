@@ -3,7 +3,9 @@
 ```plaintext
 /Root
 ├── resources/
+│   ├── README.MD (Project Structure)
 │   └── GanttChart.pdf
+│
 │
 ├── database/  
 │   ├── CreateDataBase.py
@@ -23,6 +25,7 @@
 ├── function
 │   ├── analysis.py
 │   ├── contact.py
+│   ├── search.py
 │   └── application.py
 │
 │
@@ -33,12 +36,12 @@
 │   │   └── normalize.css
 │   │
 │   ├── DiagramaER/
-│   │   ├── DiagramaER.md
+│   │   ├── README.md (DiagramER in uml)
 │   │   └── PhotoER.png
 │   │
 │   ├── JSON /
 │   │   ├── mails/
-│   │   │    └──
+│   │   │    └── contact_data.json
 │   │   │
 │   │   └── language/
 │   │          ├── Index/

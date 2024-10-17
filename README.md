@@ -17,7 +17,6 @@
 
 ### What You Need to Run the Project:
 
-
 ## Requirements
 * Python 3.8 or higher
 * Docker Desktop
@@ -42,7 +41,7 @@ cd ./docker/
 docker compose up
 ```
 
-### Third Step: Set up the database
+### Third Step: Set up the database (use for example)
 ```bash
 cd ./database/
 python CreateDataBase.py

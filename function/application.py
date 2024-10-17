@@ -1,10 +1,14 @@
-from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
+from flask import render_template, request
 from sqlalchemy.orm import sessionmaker
-from database.DataBase import University, Faculty, Career, Teacher, Student, Course, Enrollment, GradeRecord, AttendanceRecord
-from sqlalchemy import create_engine, session
+from database.DataBase import Faculty, Teacher, Student, Course, GradeRecord
+from sqlalchemy import create_engine
 
-def application():
+# Crear motor de base de datos y sesión (asegúrate de que el URI de la base de datos sea correcto)
+engine = create_engine('mysql+pymysql://root:rootpass@localhost/universitydb')
+Session = sessionmaker(bind=engine)
+session = Session()
+
+def application_view():
     query = request.args.get('query', '')
 
     results = {
@@ -17,22 +21,22 @@ def application():
     }
 
     if query:
-        # Search students by first or last name
+        # Buscar estudiantes por nombre o apellido
         results['students'] = session.query(Student).filter(
             (Student.first_name.like(f'%{query}%')) | (Student.last_name.like(f'%{query}%'))
         ).all()
 
-        # Search teachers by first or last name
+        # Buscar profesores por nombre o apellido
         results['teachers'] = session.query(Teacher).filter(
             (Teacher.first_name.like(f'%{query}%')) | (Teacher.last_name.like(f'%{query}%'))
         ).all()
 
-        # Search courses by name
+        # Buscar cursos por nombre
         results['courses'] = session.query(Course).filter(
             Course.name.like(f'%{query}%')
         ).all()
 
-        # Search grades based on student name, course name, or grade
+        # Buscar calificaciones basadas en nombre de estudiante, curso o calificación
         results['grades'] = session.query(
             Student.first_name, Student.last_name, Course.name, GradeRecord.grade
         ).join(GradeRecord, Student.id == GradeRecord.student_id).join(Course, GradeRecord.course_id == Course.id).filter(
@@ -41,17 +45,17 @@ def application():
             (Course.name.like(f'%{query}%'))
         ).all()
 
-        # Search faculties by name and show associated students and teachers
+        # Buscar facultades por nombre y mostrar estudiantes y profesores asociados
         faculties = session.query(Faculty).filter(
             Faculty.name.like(f'%{query}%')
         ).all()
 
         for faculty in faculties:
-            # Get all students in the faculty
+            # Obtener todos los estudiantes en la facultad
             faculty_students = session.query(Student).join(Career).filter(Career.faculty_id == faculty.id).all()
             results['faculty_students'].extend(faculty_students)
 
-            # Get all teachers in the faculty
+            # Obtener todos los profesores en la facultad
             faculty_teachers = session.query(Teacher).join(Career).filter(Career.faculty_id == faculty.id).all()
             results['faculty_teachers'].extend(faculty_teachers)
 

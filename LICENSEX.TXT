@@ -1,0 +1,39 @@
+                            Apache License
+                        Version 2.0, January 2004
+                    http://www.apache.org/licenses/
+
+Copyright (c) 2024, Chuequito Company
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+    This project adheres to the standards set forth in sections 1 through 3 of the Apache License, Version 2.0.
+
+2. Grant of License.
+    Subject to the terms and conditions of this License, you are hereby granted a worldwide, royalty-free, non-exclusive, perpetual license to use, reproduce, modify, distribute, and display the Work. You may also prepare derivative works of the Work, under the following conditions:
+
+    You must comply with the conditions stated in this License for any use, reproduction, or distribution of the Work.
+    Any modifications or derivative works must be distributed under the same terms and conditions as the original License.
+
+2.1 Allowed.
+    You are permitted to use, copy, modify, and distribute the code, provided that you comply with the conditions established in this License and that the same license terms are applied to any redistribution of the modified or original code.
+
+2.2 Restrictions.
+    You may not use the name of the author or the names of the project contributors to endorse or promote products derived from this software without prior written permission from the author. Additionally, you cannot claim full credit for the project or its components without appropriate attribution as outlined in section 3.1.
+
+3. Conditions and Limitations.
+
+3.1 Attribution.
+    You must provide appropriate credit to "Chuequito Company" in any use or distribution of this code, indicating clearly that the original work was created by us.
+
+3.2 Disclaimer of Liability.
+    Chuequito Company is not responsible for any damages, direct or indirect, arising from the use of this code, including but not limited to malfunctions, security issues, or data loss. Use at your own risk, and ensure that you perform thorough testing before integrating the code into any system.
+
+3.3 Modification Rights.
+    Once the code is downloaded, users have the right to modify, improve, or adapt the code as they see fit, as long as they adhere to the terms of this license.
+
+END OF TERMS AND CONDITIONS
+
+
+
+    APPENDIX: How to apply the Apache License to your work.

@@ -1,5 +1,6 @@
-from DataBase import * #Mala practica de programacion, pero se hace para simplificar el codigo
+from DataBase import *  # Mala práctica de programación, pero se hace para simplificar el código
 
+# Datos de universidades
 university_data = [
     {'name': 'University of Technology'},
     {'name': 'Global Business University'},
@@ -41,13 +42,13 @@ for data in career_data:
     session.add(career)
 session.commit()
 
-# Datos de profesores (algunos compartidos)
+# Datos de profesores (algunos compartidos entre facultades)
 teacher_data = [
     {'first_name': 'Carlos', 'last_name': 'Garcia', 'faculty_id': 1},
     {'first_name': 'Laura', 'last_name': 'Diaz', 'faculty_id': 2},
     {'first_name': 'Fernando', 'last_name': 'Gomez', 'faculty_id': 3},
     {'first_name': 'Clara', 'last_name': 'Sanchez', 'faculty_id': 4},
-    {'first_name': 'Carlos', 'last_name': 'Garcia', 'faculty_id': 2},
+    {'first_name': 'Carlos', 'last_name': 'Garcia', 'faculty_id': 2},  # Mismo profesor en dos facultades
     {'first_name': 'Sofia', 'last_name': 'Martinez', 'faculty_id': 5}
 ]
 
@@ -85,13 +86,17 @@ for data in student_data:
     session.add(student)
 session.commit()
 
-# Datos de inscripciones
+# Datos de inscripciones actualizados (un mismo estudiante en varios cursos)
 enrollment_data = [
-    {'enrollment_date': '2023-01-10', 'approval': True, 'student_id': 1, 'course_id': 1},
-    {'enrollment_date': '2023-01-15', 'approval': True, 'student_id': 2, 'course_id': 2},
-    {'enrollment_date': '2023-02-20', 'approval': True, 'student_id': 3, 'course_id': 3},
-    {'enrollment_date': '2023-02-25', 'approval': True, 'student_id': 4, 'course_id': 4},
-    {'enrollment_date': '2023-03-10', 'approval': True, 'student_id': 5, 'course_id': 5}
+    {'enrollment_date': '2023-01-10', 'approval': True, 'student_id': 1, 'course_id': 1},  # José en Data Structures
+    {'enrollment_date': '2023-01-12', 'approval': True, 'student_id': 1, 'course_id': 2},  # José en Mechanical Design
+    {'enrollment_date': '2023-01-15', 'approval': True, 'student_id': 2, 'course_id': 2},  # Luisa en Mechanical Design
+    {'enrollment_date': '2023-02-20', 'approval': True, 'student_id': 3, 'course_id': 3},  # Diego en Corporate Strategy
+    {'enrollment_date': '2023-02-25', 'approval': True, 'student_id': 4, 'course_id': 4},  # Ana en Financial Analysis
+    {'enrollment_date': '2023-03-10', 'approval': True, 'student_id': 5, 'course_id': 5},  # Lucia en Advanced Painting
+    {'enrollment_date': '2023-03-15', 'approval': True, 'student_id': 1, 'course_id': 3},  # José en Corporate Strategy
+    {'enrollment_date': '2023-03-20', 'approval': True, 'student_id': 2, 'course_id': 4},  # Luisa en Financial Analysis
+    {'enrollment_date': '2023-03-25', 'approval': True, 'student_id': 5, 'course_id': 1}   # Lucia en Data Structures
 ]
 
 for data in enrollment_data:
@@ -105,7 +110,11 @@ grade_data = [
     {'student_id': 2, 'course_id': 2, 'grade': 90.0},
     {'student_id': 3, 'course_id': 3, 'grade': 88.3},
     {'student_id': 4, 'course_id': 4, 'grade': 92.1},
-    {'student_id': 5, 'course_id': 5, 'grade': 87.4}
+    {'student_id': 5, 'course_id': 5, 'grade': 87.4},
+    {'student_id': 1, 'course_id': 2, 'grade': 82.0},  # José en Mechanical Design
+    {'student_id': 1, 'course_id': 3, 'grade': 89.0},  # José en Corporate Strategy
+    {'student_id': 2, 'course_id': 4, 'grade': 93.0},  # Luisa en Financial Analysis
+    {'student_id': 5, 'course_id': 1, 'grade': 91.5}   # Lucia en Data Structures
 ]
 
 for data in grade_data:
@@ -119,7 +128,11 @@ attendance_data = [
     {'student_id': 2, 'course_id': 2, 'attendance': True},
     {'student_id': 3, 'course_id': 3, 'attendance': True},
     {'student_id': 4, 'course_id': 4, 'attendance': True},
-    {'student_id': 5, 'course_id': 5, 'attendance': False}
+    {'student_id': 5, 'course_id': 5, 'attendance': False},
+    {'student_id': 1, 'course_id': 2, 'attendance': True},  # José en Mechanical Design
+    {'student_id': 1, 'course_id': 3, 'attendance': True},  # José en Corporate Strategy
+    {'student_id': 2, 'course_id': 4, 'attendance': True},  # Luisa en Financial Analysis
+    {'student_id': 5, 'course_id': 1, 'attendance': True}   # Lucia en Data Structures
 ]
 
 for data in attendance_data:

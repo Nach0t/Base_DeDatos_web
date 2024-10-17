@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker
 from database.DataBase import University, Faculty, Career, Teacher, Student, Course, Enrollment, GradeRecord, AttendanceRecord
 from sqlalchemy import create_engine
 
-
 import os
 import json
 from flask import Blueprint, request, render_template
@@ -65,7 +64,7 @@ def submit_form():
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)  # Escribir datos en formato JSON
 
-        return "Form submitted successfully!"
+        return "Form submitted successfully and any moment now contact with you!"
     except Exception as e:
         return f"An error occurred while submitting the form: {e}"
     
