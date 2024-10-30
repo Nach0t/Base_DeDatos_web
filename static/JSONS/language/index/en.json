@@ -1,18 +1,18 @@
 {
+
   "home": "Home",
   "application": "Application",
-  "about": "About",
+  "about": "We",
   "contact": "Contact",
   "title": "What It Does and How It Works:",
-  "titledescription": "This website is a system for analyzing and storing grades. It helps teachers and students monitor performance and provides alerts to students if their scores fall below a certain threshold.",
+  "titledescription": "This website is a system for analyzing and storing grades. It helps teachers and students monitor academic performance, and issues alerts to students if their grades fall below a certain threshold.",
   "techTitle": "Technologies Used:",
   "techItems": {
     "HTML": "HTML",
     "CSS": "CSS",
     "JavaScript": "JavaScript"
   },
-  "howItWorks": "How it Works:",
-  "howItWorksDescription": "yes" ,
-
-  "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. All rights reserved."
+  "howItWorks": "How ItWorks:",
+  "howItWorksDescription": "Application: Allows you to filter both students and teachers. This way, you can see which courses students are enrolled in, as well as check their grade averages. It is also possible to view which courses each teacher teaches and the related details. \n\n Analysis: Provides a detailed Gaussian bell-shaped analysis of students' academic performance in their courses. You can analyze the grades of an individual student or perform an overall analysis of performance in an entire course.",
+  "footer": "&copy; <span id=\"currentYear\"></span> NotaMaster. All rights reserved."
 }

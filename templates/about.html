@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="title">About</title>
+    <title>About Us</title>
 
     <!-- Icon -->
     <link
@@ -14,22 +14,12 @@
 
     <!-- CSS -->
     <link
-      rel="preload"
-      href="{{ url_for('static', filename='CSS/styles.css') }}"
-      as="style"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='CSS/normalize.css') }}"
     />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='CSS/styles.css') }}"
-    />
-    <link
-      rel="preload"
-      href="{{ url_for('static', filename='CSS/normalize.css') }}"
-      as="style"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='CSS/normalize.css') }}"
     />
   </head>
 
@@ -66,31 +56,49 @@
 
     <main>
       <section>
-        <h2 id="aboutTitle"></h2>
-        <p id="description"></p>
+        <h2>About Us</h2>
+        <p>
+          We are a group of Computer Science students from University San
+          Sebastian, Chile.
+        </p>
 
-        <h3 id="teamTitle"></h3>
+        <h3>Our Team:</h3>
         <ul>
-          <li id="teamMember1"></li>
-          <p id="teamExpertise1"></p>
-          <li id="teamMember2"></li>
-          <p id="teamExpertise2"></p>
-          <li id="teamMember3"></li>
-          <p id="teamExpertise3"></p>
+          <li>Ignacio Rehbein</li>
+          <p>
+            * Designed the structure and developed the web using HTML, CSS, and
+            JavaScript. Optimized the Flask code and structured the project.
+          </p>
+
+          <li>Claudio Diaz</li>
+          <p>
+            * Developed the logic in Flask and created UML diagrams for system
+            architecture.
+          </p>
+
+          <li>Vicente Quintanilla</li>
+          <p>
+            * Created the database, logic, queries, and handled interactions
+            with the system.
+          </p>
         </ul>
       </section>
     </main>
 
     <footer>
-      <p id="footer"></p>
+      <p>
+        &copy; <span id="currentYear"></span> NotaMaster. All rights reserved.
+      </p>
     </footer>
 
     <!-- JavaScript -->
-    <script src="{{ url_for('static', filename='JavaScript/theme.js') }}"></script>
-    <script src="{{ url_for('static', filename='JavaScript/translation2.js') }}"></script>
+    <script src="{{ url_for('static', filename='JAVASCRIPT/theme.js') }}"></script>
     <script>
+      // Actualiza el año en el pie de página
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
       function changeLanguage(lang) {
-        loadTranslations(lang); // Asegúrate de que la función loadTranslations esté disponible aquí
         alert(`Language changed to: ${lang}`);
       }
     </script>

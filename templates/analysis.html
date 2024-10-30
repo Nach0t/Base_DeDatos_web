@@ -78,18 +78,31 @@
       <p>Total Records: {{ analysis_results.total_students }}</p>
       <p>Average Grade: {{ analysis_results.mean }}</p>
       <p>Standard Deviation: {{ analysis_results.std_dev }}</p>
-      {% else %}
+
+      <!-- Mostrar la gráfica si está disponible -->
+      {% if analysis_results.gaussian_plot %}
+      <div>
+        <h4>Grade Distribution (Gaussian Curve)</h4>
+        <img
+          src="data:image/png;base64,{{ analysis_results.gaussian_plot }}"
+          alt="Distribution of grades"
+        />
+      </div>
+      {% endif %} {% else %}
       <p>No data available for the search query.</p>
       {% endif %}
     </main>
 
     <footer>
       <p>
-        &copy; <span id="currentYear"></span> Chuequito Company. All rights
-        reserved.
+        &copy; <span id="currentYear"></span> NotaMaster. All rights reserved.
       </p>
     </footer>
 
     <script src="{{ url_for('static', filename='JAVASCRIPT/theme.js') }}"></script>
+    <script>
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+    </script>
   </body>
 </html>

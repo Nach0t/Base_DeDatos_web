@@ -1,34 +1,28 @@
-
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, DECIMAL, Date, Boolean, Float
 from sqlalchemy import text
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
-# Configuración de la base de datos
-config = {'host': 'localhost', 'database_name': 'universitydb', 'user': 'root', 'password': 'rootpass'}
 
-# Crear el motor de conexión y la base de datos si no existe
-engine = create_engine(f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}', echo=True)
+config = {'host': 'localhost', 'database_name': 'universitydb', 'user': 'root', 'password': 'rootpass'}
+engine = create_engine(f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}', echo=False)
 
 with engine.connect() as conn:
     conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {config['database_name']}"))
 
-# Declarar base para las clases ORM
+engine = create_engine(f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}/{config["database_name"]}', echo=False)
+
 Base = declarative_base()
 
-# Conectar con la base de datos recién creada
-engine = create_engine(f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}/{config["database_name"]}', echo=True)
-
-# Definición de las tablas
 
 class University(Base):
-    __tablename__ = 'university'  # Doble guion bajo en ambos lados
+    __tablename__= 'university'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     faculties = relationship('Faculty', back_populates='university')
 
 class Faculty(Base):
-    __tablename__ = 'faculty'  # Doble guion bajo en ambos lados
+    __tablename__ = 'faculty'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     university_id = Column(Integer, ForeignKey('university.id'))
@@ -37,15 +31,16 @@ class Faculty(Base):
     teachers = relationship('Teacher', back_populates='faculty')
 
 class Career(Base):
-    __tablename__ = 'career'  # Doble guion bajo en ambos lados
+    __tablename__ = 'career'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     faculty_id = Column(Integer, ForeignKey('faculty.id'))
     faculty = relationship('Faculty', back_populates='careers')
     students = relationship('Student', back_populates='career')
+    courses = relationship('Course', back_populates='career')
 
 class Teacher(Base):
-    __tablename__ = 'teacher'  # Doble guion bajo en ambos lados
+    __tablename__ = 'teacher'
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
@@ -54,7 +49,7 @@ class Teacher(Base):
     courses = relationship('Course', back_populates='teacher')
 
 class Student(Base):
-    __tablename__ = 'student'  # Doble guion bajo en ambos lados
+    __tablename__ = 'student'
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
@@ -65,17 +60,19 @@ class Student(Base):
     attendances = relationship('AttendanceRecord', back_populates='student')
 
 class Course(Base):
-    __tablename__ = 'course'  # Doble guion bajo en ambos lados
+    __tablename__ = 'course'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     teacher_id = Column(Integer, ForeignKey('teacher.id'))
+    career_id = Column(Integer, ForeignKey('career.id'))
     teacher = relationship('Teacher', back_populates='courses')
+    career = relationship('Career', back_populates='courses')
+    percentages = relationship('Percentage', back_populates='course')
     enrollments = relationship('Enrollment', back_populates='course')
-    grades = relationship('GradeRecord', back_populates='course')
     attendances = relationship('AttendanceRecord', back_populates='course')
 
 class Enrollment(Base):
-    __tablename__ = 'enrollment'  # Doble guion bajo en ambos lados
+    __tablename__ = 'enrollment'
     id = Column(Integer, primary_key=True, autoincrement=True)
     enrollment_date = Column(Date, nullable=False)
     approval = Column(Boolean, nullable=False)
@@ -85,16 +82,25 @@ class Enrollment(Base):
     course = relationship('Course', back_populates='enrollments')
 
 class GradeRecord(Base):
-    __tablename__ = 'grade_record'  # Doble guion bajo en ambos lados
+    __tablename__ = 'grade_record'
     id = Column(Integer, primary_key=True, autoincrement=True)
     student_id = Column(Integer, ForeignKey('student.id'))
-    course_id = Column(Integer, ForeignKey('course.id'))
+    percentage_id = Column(Integer, ForeignKey('percentage.id'))
     grade = Column(Float)
     student = relationship('Student', back_populates='grades')
-    course = relationship('Course', back_populates='grades')
+    percentage = relationship('Percentage', back_populates='grade_records')
+
+class Percentage(Base):
+    __tablename__ = 'percentage'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    course_id = Column(Integer, ForeignKey('course.id'))
+    name = Column(String(100))
+    percentage = Column(Float)
+    course = relationship('Course', back_populates='percentages')
+    grade_records = relationship('GradeRecord', back_populates='percentage')
 
 class AttendanceRecord(Base):
-    __tablename__ = 'attendance_record'  # Doble guion bajo en ambos lados
+    __tablename__ = 'attendance_record'
     id = Column(Integer, primary_key=True, autoincrement=True)
     student_id = Column(Integer, ForeignKey('student.id'))
     course_id = Column(Integer, ForeignKey('course.id'))
@@ -103,9 +109,17 @@ class AttendanceRecord(Base):
     course = relationship('Course', back_populates='attendances')
 
 
-# Crear las tablas en la base de datos
+# Create the tables in the database
 Base.metadata.create_all(engine)
 
-# Crear una sesión para interactuar con la base de datos
+# Create a session to interact with the database
 Session = sessionmaker(bind=engine)
 session = Session()
+
+
+
+# Commit the changes to the database
+session.commit()
+
+# Close the session
+session.close()

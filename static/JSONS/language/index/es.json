@@ -3,8 +3,8 @@
   "application": "Aplicación",
   "about": "Nosotros",
   "contact": "Contacto",
-  "title": "Qué Hace y Cómo Funca:",
-  "titledescription": "Este sitio web es un sistema para analizar y almacenar calificaciones. Ayuda a los profesores y estudiantes a monitorear el rendimiento y proporciona alertas a los estudiantes si sus puntuaciones caen   por debajo de un umbral determinado.",
+  "title": "Qué Hace y Cómo Funciona:",
+  "titledescription": "Este sitio web es un sistema para analizar y almacenar calificaciones. Ayuda a profesores y estudiantes a monitorear el rendimiento académico, y emite alertas a los estudiantes si sus calificaciones caen por debajo de un umbral determinado.",
   "techTitle": "Tecnologías Utilizadas:",
   "techItems": {
     "HTML": "HTML",
@@ -12,6 +12,6 @@
     "JavaScript": "JavaScript"
   },
   "howItWorks": "Cómo Funciona:",
-  "howItWorksDescription": "si mas wna que la mamá de claudio",
-  "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. Todos los derechos reservados."
+  "howItWorksDescription": "Aplicación: Permite filtrar tanto alumnos como profesores. De esta manera, puedes ver en qué cursos están inscritos los alumnos y consultar sus promedios de calificaciones. También puedes visualizar los cursos que imparte cada profesor junto con los detalles correspondientes.\n\nAnálisis: Ofrece un análisis detallado en forma de campana de Gauss sobre el rendimiento académico de los alumnos en sus cursos. Puedes analizar las calificaciones de un alumno específico o realizar un análisis global del rendimiento en un curso completo.",
+  "footer": "&copy; <span id=\"currentYear\"></span> NotaMaster. Todos los derechos reservados."
 }

@@ -10,15 +10,15 @@
   "team": {
     "member1": {
       "name": "Ignacio Rehbein",
-      "expertise": "* Desing the de structure and dising the web with HTML, CSS and JavaScript. *Optimization the code the flask and struct the proyect"
+      "expertise": "Design the structure and design the web with HTML, CSS and JavaScript. Optimization of the Flask code and project structure."
     },
     "member2": {
       "name": "Claudio Diaz",
-      "expertise": "Decoding the logic in flask and DiagramER the logic in UML."
+      "expertise": "Decoding the logic in Flask and diagramming logic in UML."
     },
     "member3": {
       "name": "Vicente Quintanilla",
-      "expertise": "Crate the data base, logic, querys and interaction."
+      "expertise": "Create the database, logic, queries, and interaction."
     }
   },
   "footer": "&copy; <span id=\"currentYear\"></span> Chuequito Company. All rights reserved."
