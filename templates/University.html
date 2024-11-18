@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aplicaciones - University</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='CSS/styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .container {
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .application-header {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #444;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="application-header">Aplicaciones</h1>
+      <a href="{{ url_for('application') }}" class="button">Research</a>
+    </div>
+  </body>
+</html>

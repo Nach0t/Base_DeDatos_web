@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Evaluations</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <script
+      defer
+      src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="course-title">Edit Evaluations for {{ course.name }}</h1>
+
+      <form
+        id="evaluations-form"
+        action="{{ url_for('update_evaluations', course_id=course.id) }}"
+        method="POST"
+        onsubmit="return validateTotalPercentage();"
+      >
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Evaluation Name</th>
+              <th>Percentage</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="evaluations">
+            {% for percentage in percentages %}
+            <tr class="evaluation-row">
+              <td>
+                <input
+                  type="text"
+                  name="eval_name"
+                  value="{{ percentage.name }}"
+                  class="input-field"
+                  placeholder="Evaluation Name"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  name="eval_percentage"
+                  value="{{ percentage.percentage }}"
+                  class="input-field"
+                  placeholder="Percentage"
+                  min="0"
+                  max="100"
+                  required
+                  oninput="updateTotalPercentage()"
+                />
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="delete-button"
+                  onclick="removeEvaluation(this)"
+                >
+                  -
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <button type="button" class="add-button" onclick="addEvaluation()">
+          Add Another Evaluation
+        </button>
+
+        <p class="total-percentage">
+          Total Percentage: <span id="total-percentage">0</span>%
+        </p>
+        <p id="error-message" class="error-message" style="display: none">
+          The total percentage must be exactly 100%.
+        </p>
+
+        <button type="submit" class="save-button">Save Changes</button>
+      </form>
+
+      <a
+        href="{{ url_for('course_detail', course_id=course.id) }}"
+        class="back-link"
+        >Back to Course Details</a
+      >
+    </div>
+
+    <script>
+      // Calculate the total percentage when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        updateTotalPercentage();
+      });
+    </script>
+  </body>
+</html>

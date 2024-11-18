@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 services:
   mysql:
     image: mysql:9.0.1
@@ -8,4 +9,16 @@ services:
     ports:
       - "3306:3306"
     volumes:
+=======
+services:
+  mysql:
+    image: mysql:9.0.1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: universitydb
+    ports:
+      - "3306:3306"
+    volumes:
+>>>>>>> 8a021f5ad76212057002338ff95c18bd030e2ee5
       - ./mysql-data:/var/lib/MYSQL_DATABASE

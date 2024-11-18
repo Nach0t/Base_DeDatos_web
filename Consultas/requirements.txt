@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 Flask
 SQLAlchemy
 pymysql
+=======
+Flask
+SQLAlchemy
+pymysql
+>>>>>>> 8a021f5ad76212057002338ff95c18bd030e2ee5

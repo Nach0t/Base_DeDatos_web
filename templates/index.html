@@ -3,117 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-
-    <!-- Icon -->
-    <link
-      rel="icon"
-      href="{{ url_for('static', filename='PICTURE/icons/favicon.ico') }}"
-      type="image/x-icon"
-    />
-
-    <!-- CSS -->
-    <link
-      rel="preload"
-      href="{{ url_for('static', filename='css/styles.css') }}"
-      as="style"
-    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
     />
     <link
-      rel="preload"
-      href="{{ url_for('static', filename='css/normalize.css') }}"
-      as="style"
-    />
-    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/normalize.css') }}"
     />
+    <title>Home - Course Management</title>
   </head>
-
   <body>
-    <nav>
-      <img
-        src="{{ url_for('static', filename='PICTURE/icons/log.png') }}"
-        alt="Logo"
-        id="logo"
-      />
+    <div class="container">
+      <h1 class="course-header">
+        Welcome to the Course Management Application
+      </h1>
+      <p>
+        This application allows you to manage courses, add students, assign
+        professors, and track student grades and attendance. Below are the main
+        features of this platform:
+      </p>
       <ul>
-        <li><a href="{{ url_for('home') }}" id="home">Home</a></li>
+        <li>Add and manage university courses.</li>
+        <li>Assign professors to courses.</li>
+        <li>Add students to courses and record their evaluations.</li>
+        <li>Register and monitor student attendance.</li>
         <li>
-          <a href="{{ url_for('application') }}" id="application"
-            >Application</a
-          >
+          Automatically calculate each student's average based on evaluations.
         </li>
-        <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
-        <li><a href="{{ url_for('about') }}" id="about">About</a></li>
-        <li><a href="{{ url_for('contact') }}" id="contact">Contact</a></li>
       </ul>
-      <img
-        id="theme-icon"
-        src="{{ url_for('static', filename='PICTURE/symbols/sun.png') }}"
-        alt="Theme Icon"
-      />
-      <input type="checkbox" id="theme-toggle" />
-
-      <button onclick="changeLanguage('en')">EN</button>
-      <button onclick="changeLanguage('es')">ES</button>
-    </nav>
-
-    <main>
-      <h1 id="title"></h1>
-      <p id="titledescription"></p>
-
-      <section id="tech-used">
-        <h2 id="techTitle"></h2>
-        <br /><br />
-        <div class="tech-list">
-          <div class="tech-item tech-item-HTML">
-            <img
-              src="{{ url_for('static', filename='PICTURE/symbols/HTML.png') }}"
-              alt="HTML Icon"
-            />
-            <p id="htmlTech"></p>
-          </div>
-          <div class="tech-item tech-item-CSS">
-            <img
-              src="{{ url_for('static', filename='PICTURE/symbols/CSS.png') }}"
-              alt="CSS Icon"
-            />
-            <p id="cssTech"></p>
-          </div>
-          <div class="tech-item tech-item-JS">
-            <img
-              src="{{ url_for('static', filename='PICTURE/symbols/JS.png') }}"
-              alt="JavaScript Icon"
-            />
-            <p id="jsTech"></p>
-          </div>
-        </div>
-      </section>
-
-      <br />
-
-      <section>
-        <h1 id="howItWorks"></h1>
-        <h3 id="howItWorksDescription"></h3>
-        <div class="Diagram Er">
-          <img
-            src="{{ url_for('static', filename='DiagramaER/PhotoER.png') }}"
-            alt="ER Diagram"
-          />
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <p id="footer"></p>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="{{ url_for('static', filename='JavaScript/translations.js') }}"></script>
-    <script src="{{ url_for('static', filename='JavaScript/theme.js') }}"></script>
+      <p>
+        Use the navigation menu to access different sections of the application.
+        To view current courses, click the link below.
+      </p>
+      <a href="{{ url_for('courses') }}" class="add-course-button"
+        >View Courses</a
+      >
+      <a href="{{ url_for('university') }}" class="add-course-button"
+        >View University Information</a
+      >
+    </div>
   </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Attendance</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Course Management</a></li>
+        <li><a href="{{ url_for('attendance') }}">Student Attendance</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1>Register Attendance</h1>
+      <form action="{{ url_for('mark_attendance') }}" method="POST">
+        <label for="course_id">Course ID:</label>
+        <input type="number" id="course_id" name="course_id" required />
+
+        <label for="student_id">Student ID:</label>
+        <input type="number" id="student_id" name="student_id" required />
+
+        <label for="attendance">Attended:</label>
+        <select id="attendance" name="attendance" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+
+        <button type="submit">Register Attendance</button>
+      </form>
+
+      <!-- Flash Messages to show success and error messages -->
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+
+      <h2>Export Grades</h2>
+      <form action="{{ url_for('export_grades') }}" method="GET">
+        <label for="course_id_export">Course ID:</label>
+        <input type="number" id="course_id_export" name="course_id" required />
+        <button type="submit">Export Grades</button>
+      </form>
+    </div>
+  </body>
+</html>

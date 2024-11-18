@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Add Course</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="course-header">Add New Course</h1>
+      <form
+        action="{{ url_for('add_course') }}"
+        method="POST"
+        onsubmit="return validateTotalPercentage()"
+      >
+        <div class="input-group">
+          <label for="course_name" class="input-label">Course Name:</label>
+          <input
+            type="text"
+            id="course_name"
+            name="course_name"
+            class="input-field"
+            placeholder="Enter the course name"
+            required
+          />
+        </div>
+
+        <!-- Add Professors Section -->
+        <div id="professors-section" class="professors-section">
+          <div class="input-group professor-row">
+            <label for="professor_name" class="input-label"
+              >Professor Name:</label
+            >
+            <input
+              type="text"
+              name="professor_name"
+              class="input-field"
+              placeholder="Professor Name"
+              required
+            />
+            <button
+              type="button"
+              class="delete-button"
+              onclick="removeProfessor(this)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="add-button" onclick="addProfessor()">
+          Add Another Professor
+        </button>
+
+        <!-- Evaluations Section -->
+        <div id="evaluations" class="evaluations-section">
+          <div class="evaluation-row">
+            <div class="input-group evaluation-group">
+              <label for="eval_name" class="input-label"
+                >Evaluation Name:</label
+              >
+              <input
+                type="text"
+                name="eval_name"
+                class="input-field"
+                placeholder="Evaluation Name"
+                required
+              />
+            </div>
+            <div class="input-group percentage-group">
+              <label for="eval_percentage" class="input-label"
+                >Percentage:</label
+              >
+              <input
+                type="number"
+                name="eval_percentage"
+                class="input-field"
+                placeholder="%"
+                min="0"
+                max="100"
+                required
+                oninput="updateTotalPercentage()"
+              />
+            </div>
+            <button
+              type="button"
+              class="delete-button"
+              onclick="removeEvaluation(this)"
+            >
+              -
+            </button>
+          </div>
+        </div>
+
+        <p class="total-percentage">
+          Total Percentage: <span id="total-percentage">0</span>%
+        </p>
+        <p id="error-message" class="error-message" style="display: none">
+          The total percentage must be exactly 100%.
+        </p>
+
+        <div class="buttons">
+          <button type="button" class="add-button" onclick="addEvaluation()">
+            Add Another Evaluation
+          </button>
+          <button type="submit" class="save-button">Add Course</button>
+        </div>
+      </form>
+
+      <a href="{{ url_for('index') }}" class="back-link"
+        >Return to Course List</a
+      >
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
