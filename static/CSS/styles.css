@@ -1,257 +1,237 @@
-:root {
-  --White: #ffffff;
-  /* White color */
-  --Black: #212121;
-  /* Black color */
-  --fondo: #ffffff;
-  /* Background color for light mode */
-  --text-color: var(--Black);
-  /* Text color for light mode */
-  --nav-bg: #333333;
-  /* Background color for navigation bars */
-  --text: 1.8rem;
-  /* Font size for text elements in navigation */
-  --form-bg: #ffffff;
-  /* Background color for form in light mode */
-  --form-text: #000000;
-  /* Text color for form in light mode */
-}
-
-body.dark-mode {
-  --fondo: #252424;
-  /* Background color for dark mode */
-  --text-color: var(--White);
-  /* Text color for dark mode */
-  --form-bg: #333333;
-  /* Background color for form in dark mode */
-  --form-text: var(--White);
-  /* Text color for form in dark mode */
-}
-
-html {
-  font-size: 62.5%;
-  /* Base font size (16px = 1rem) */
-}
-
 body {
-  background-color: var(--fondo);
-  /* Sets the background color of the body */
-  font-family: "Fredoka", sans-serif;
-  /* Font family for the text */
-  font-size: 16px;
-  /* Base font size for body text */
-  color: var(--text-color);
-  /* Text color */
-  transition: background-color 0.5s, color 0.5s;
-  /* Smooth transition for color changes */
-}
-
-nav {
-  background-color: var(--nav-bg);
-  /* Background color of the navigation bar */
-  padding: 1rem;
-  /* Padding inside the navigation bar */
-  border-radius: 0.5rem;
-  /* Rounded corners for the navigation bar */
-  margin-bottom: 2rem;
-  /* Space below the navigation bar */
-  display: flex;
-  /* Aligns items horizontally */
-  align-items: center;
-  /* Centers items vertically */
-  justify-content: space-between;
-  /* Spaces out items in the navigation */
-}
-
-nav ul {
-  list-style: none;
-  /* Removes default list bullets */
-  display: flex;
-  /* Aligns list items horizontally */
-  gap: 2rem;
-  /* Space between the navigation links */
-  padding: 0;
-  /* Removes default padding */
-  margin: 0 0 0 2rem;
-  /* Adds margin to the left side of the ul */
-}
-
-nav a {
-  color: var(--White);
-  /* Text color of the navigation links */
-  text-decoration: none;
-  /* Removes the underline from links */
-  font-size: var(--text);
-  /* Font size for navigation links */
-}
-
-nav a:hover {
-  text-decoration: underline;
-  /* Underline the link text on hover */
-}
-
-footer {
-  background-color: var(--nav-bg);
-  /* Background color for the footer */
-  color: var(--White);
-  /* Text color */
-  text-align: center;
-  /* Center-align the text */
-  padding: 1rem;
-  /* Padding around the text */
-  border-top: 1px solid var(--White);
-  /* Optional: Adds a border at the top of the footer */
-  margin-top: 2rem;
-  /* Space above the footer */
-}
-
-footer p {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  line-height: 1.6;
   margin: 0;
-  /* Removes default margin */
-  font-size: 1rem;
-  /* Font size for the footer text */
+  padding: 0;
 }
 
-#theme-icon {
-  width: 30px;
-  height: 30px;
-  margin-left: auto;
-  /* Aligns the theme icon to the right */
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-#logo {
-  width: 150px;
-  height: 80px;
-  object-fit: contain;
-  /* Ensures the logo maintains its size and doesn't affect layout */
-}
-
-.form-container {
-  background-color: var(--form-bg);
-  color: var(--form-text);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  max-width: 500px;
-  margin: 0 auto;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form-container h2 {
+.course-header {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 20px;
 }
 
-.form-container label {
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+  color: #444;
+}
+
+.input-field {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.evaluation-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.add-button,
+.save-button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
   font-weight: bold;
 }
 
-.form-container input,
-.form-container select,
-.form-container textarea {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid #cccccc;
-  border-radius: 0.25rem;
-  font-size: 1.6rem;
+.add-button {
+  background-color: #28a745;
 }
 
-.form-container button {
-  width: 100%;
-  padding: 0.8rem;
-  background-color: var(--nav-bg);
-  color: var(--White);
-  border: none;
-  border-radius: 0.25rem;
-  font-size: 1.8rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.add-button:hover {
+  background-color: #218838;
 }
 
-.form-container button:hover {
-  background-color: #444444;
+.save-button:hover {
+  background-color: #0056b3;
 }
 
-
-
-
-
-
-
-
-/* Estilos para la sección de tecnologías */
-#tech-used {
-  margin: 2rem 0;
+.total-percentage {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 15px;
 }
 
-#tech-used h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+.error-message {
+  color: #d9534f;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
 }
 
-.tech-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
-  justify-content: center;
-}
-
-.tech-item {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
-  max-width: 250px;
-  text-align: center;
-}
-
-/* Estilos para cada tecnología */
-.tech-item-HTML {
-  background-color: #f16529;
-}
-
-.tech-item-CSS {
-  background-color: #2965f1;
-}
-
-.tech-item-JS {
-  background-color: #f7df1e;
-}
-
-.tech-item img {
-  width: 75px;
-  height: 75px;
-  object-fit: contain;
-}
-
-/* Aumenta el tamaño del logo de CSS */
-.tech-item-CSS img {
-  width: 85px;
-  height: 85px;
-}
-
-.tech-item p {
-  margin: 0;
-  font-size: 1.6rem;
-  color: #000000d6;
-  /* Cambia el color del texto a negro */
-}
-
-.Diagram.Er {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.back-link {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+  color: #007bff;
   padding: 10px;
 }
 
-.Diagram.Er img {
-  max-width: 80%;
-  height: auto;
-  border: 2px solid #ccc;
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.delete-button:hover {
+  background-color: #c9302c;
+}
+
+/* Mejora de espaciado y estructura para evaluaciones */
+.evaluations-section {
+  margin-bottom: 20px;
+}
+
+.evaluation-group,
+.percentage-group {
+  flex: 1;
+}
+
+.evaluation-row input[type="text"],
+.evaluation-row input[type="number"] {
+  width: 90%;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 1rem;
+  text-align: left;
+  background: #ffffff;
   border-radius: 8px;
+  overflow: hidden;
+}
+
+.styled-table thead tr {
+  background-color: #007bff;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Estilo adicional para la tarjeta de curso */
+.course-card {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.course-list-item {
+  list-style: none;
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.course-list-item a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.course-list-item a:hover {
+  color: #0056b3;
+}
+
+/* Botón para agregar curso */
+.add-course-button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+.add-course-button:hover {
+  background-color: #0056b3;
+}
+
+/* Contenedor para la lista de cursos */
+.course-container {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* Mejora para el apartado de profesores */
+.professors-header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #444;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.professors-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #333;
+}
+
+.professors-list li {
+  margin-bottom: 8px;
 }
