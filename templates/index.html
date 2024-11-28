@@ -3,21 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <title>Home - Course Management</title>
   </head>
   <body>
     <div class="container">
-      <h1 class="course-header">
-        Welcome to the Course Management Application
-      </h1>
+      <h1 class="header">Welcome to the Course Management Application</h1>
       <p>
         This application allows you to manage courses, add students, assign
         professors, and track student grades and attendance. Below are the main
@@ -34,14 +28,13 @@
       </ul>
       <p>
         Use the navigation menu to access different sections of the application.
-        To view current courses, click the link below.
       </p>
-      <a href="{{ url_for('courses') }}" class="add-course-button"
-        >View Courses</a
-      >
-      <a href="{{ url_for('university') }}" class="add-course-button"
-        >View University Information</a
-      >
+      <div class="navigation-section">
+        <a href="{{ url_for('view_university') }}" class="button"
+          >View University</a
+        >
+        <a href="{{ url_for('students_page') }}" class="button">Students</a>
+      </div>
     </div>
   </body>
 </html>

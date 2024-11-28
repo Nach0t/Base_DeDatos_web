@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Calls updateTotalPercentage when the page loads to display the correct initial percentage
-    updateTotalPercentage();
+    // Automatically populate initial percentages and update the total percentage
+    populateTotalPercentage();
 });
 
-function addEvaluation() {
+// Function to add a new dynamic evaluation row
+function addDynamicEvaluation() {
     const evaluationsDiv = document.getElementById('evaluations');
+    if (!evaluationsDiv) {
+        console.error("The evaluations container was not found.");
+        return;
+    }
+
     const newEvaluation = document.createElement('div');
     newEvaluation.className = 'evaluation-row';
 
@@ -18,24 +24,30 @@ function addEvaluation() {
     updateTotalPercentage();
 }
 
+// Function to remove an evaluation row
 function removeEvaluation(button) {
-    const evaluationDiv = button.parentElement;
-    evaluationDiv.remove();
+    const evaluationRow = button.parentElement; // Elimina la fila completa
+    evaluationRow.remove();
     updateTotalPercentage();
 }
 
+// Function to update the total percentage based on evaluation percentages
 function updateTotalPercentage() {
     const percentageInputs = document.querySelectorAll('input[name="eval_percentage"]');
     let total = 0;
 
     // Calculate the total percentage by summing the values of the inputs
     percentageInputs.forEach(input => {
-        total += parseFloat(input.value) || 0;
+        const value = parseFloat(input.value);
+        if (!isNaN(value)) {
+            total += value;
+        }
     });
 
+    // Update the total percentage on the page
     document.getElementById('total-percentage').innerText = total;
 
-    // Show error message if the total is not equal to 100%
+    // Show an error message if the total percentage is not 100%
     const errorMessage = document.getElementById('error-message');
     if (total !== 100) {
         errorMessage.style.display = 'block';
@@ -44,8 +56,25 @@ function updateTotalPercentage() {
     }
 }
 
+// Function to validate that the total percentage is exactly 100% before submission
 function validateTotalPercentage() {
     const totalPercentage = parseFloat(document.getElementById('total-percentage').innerText);
+    const evaluationNames = document.querySelectorAll('input[name="eval_name"]');
+    const evaluationPercentages = document.querySelectorAll('input[name="eval_percentage"]');
+
+    // Check for empty names or invalid percentages
+    for (let i = 0; i < evaluationNames.length; i++) {
+        if (evaluationNames[i].value.trim() === "") {
+            alert('Evaluation name cannot be empty.');
+            return false;
+        }
+
+        if (evaluationPercentages[i].value.trim() === "" || isNaN(evaluationPercentages[i].value)) {
+            alert('Evaluation percentage must be a valid number.');
+            return false;
+        }
+    }
+
     if (totalPercentage !== 100) {
         alert('The total percentage must be exactly 100%. Please adjust the values.');
         return false;
@@ -53,23 +82,19 @@ function validateTotalPercentage() {
     return true;
 }
 
-function addProfessor() {
-    const professorsSection = document.getElementById('professors-section');
-    const newProfessorRow = document.createElement('div');
-    newProfessorRow.className = 'professor-row';
+// Automatically populate and update initial percentages
+function populateTotalPercentage() {
+    const percentageInputs = document.querySelectorAll('input[name="eval_percentage"]');
+    let total = 0;
 
-    newProfessorRow.innerHTML = `
-        <div class="input-group">
-            <label for="professor_name" class="input-label">Professor Name:</label>
-            <input type="text" name="professor_name" class="input-field" placeholder="Professor Name" required />
-            <button type="button" class="delete-button" onclick="removeProfessor(this)">-</button>
-        </div>
-    `;
+    percentageInputs.forEach(input => {
+        const value = parseFloat(input.value);
+        if (!isNaN(value)) {
+            total += value;
+        }
+    });
 
-    professorsSection.appendChild(newProfessorRow);
-}
-
-function removeProfessor(button) {
-    const professorRow = button.parentElement.parentElement; // Go up one level to remove the entire professor container
-    professorRow.remove();
+    // Update the total percentage displayed
+    document.getElementById('total-percentage').innerText = total;
+    updateTotalPercentage();
 }

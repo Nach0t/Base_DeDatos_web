@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register New Student</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">Register New Student</h1>
+      <form method="POST">
+        <div class="input-group">
+          <label for="name" class="input-label">First Name:</label>
+          <input type="text" name="name" class="input-field" required />
+        </div>
+        <div class="input-group">
+          <label for="last_name" class="input-label">Last Name:</label>
+          <input type="text" name="last_name" class="input-field" required />
+        </div>
+        <div class="input-group">
+          <label for="rut" class="input-label"
+            >RUT (Without check digit or dots):</label
+          >
+          <input type="text" name="rut" class="input-field" required />
+        </div>
+        <div class="input-group">
+          <label for="faculty_id" class="input-label">Select Faculty:</label>
+          <select
+            name="faculty_id"
+            id="faculty_id"
+            class="input-field"
+            required
+            onchange="loadCareers(this.value)"
+          >
+            <option value="">Select Faculty</option>
+            {% for faculty in faculties %}
+            <option value="{{ faculty.id }}">{{ faculty.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="career_id" class="input-label">Select Career:</label>
+          <select name="career_id" id="career_id" class="input-field" required>
+            <option value="">Select Career</option>
+          </select>
+        </div>
+        <button type="submit" class="button">Register Student</button>
+      </form>
+      <a href="{{ url_for('students_page') }}" class="back-link"
+        >Back to Students</a
+      >
+    </div>
+
+    <script>
+      function loadCareers(facultyId) {
+        if (!facultyId) {
+          document.getElementById("career_id").innerHTML =
+            "<option value=''>Select Career</option>";
+          return;
+        }
+
+        fetch(`/get_careers/${facultyId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            let careerSelect = document.getElementById("career_id");
+            careerSelect.innerHTML = "<option value=''>Select Career</option>";
+            data.careers.forEach((career) => {
+              let option = document.createElement("option");
+              option.value = career.id;
+              option.textContent = career.name;
+              careerSelect.appendChild(option);
+            });
+          });
+      }
+    </script>
+  </body>
+</html>

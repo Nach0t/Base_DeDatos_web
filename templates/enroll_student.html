@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Enrollment</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">Enroll Student in Course</h1>
+      <form method="POST">
+        <div class="input-group">
+          <label for="student_id" class="input-label">Select Student:</label>
+          <select
+            name="student_id"
+            id="student_id"
+            class="input-field"
+            required
+          >
+            <option value="">Select Student</option>
+            {% for student in students %}
+            <option value="{{ student.id }}">
+              {{ student.name }} {{ student.last_name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="course_id" class="input-label">Select Course:</label>
+          <select name="course_id" id="course_id" class="input-field" required>
+            <option value="">Select Course</option>
+          </select>
+        </div>
+
+        <button type="submit" class="button">Enroll Student</button>
+      </form>
+
+      <div class="back-buttons">
+        <a
+          href="{{ url_for('students_page') }}"
+          class="button back-previous-button"
+          >Back to Students</a
+        >
+      </div>
+    </div>
+
+    <script>
+      function updateCourses() {
+        const studentId = document.getElementById("student_id").value;
+        const courses = {{ student_courses | tojson }};
+        const courseSelect = document.getElementById("course_id");
+
+        courseSelect.innerHTML = "<option value=''>Select Course</option>";
+
+        const selectedStudentCourses = courses[studentId] || [];
+        selectedStudentCourses.forEach(course => {
+          const option = document.createElement("option");
+          option.value = course.id;
+          option.textContent = course.name;
+          courseSelect.appendChild(option);
+        });
+      }
+
+      document.getElementById("student_id").addEventListener("change", updateCourses);
+    </script>
+  </body>
+</html>

@@ -1,305 +1,330 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, send_file
-from sqlalchemy.orm import joinedload
-from datetime import date
-from models import engine, Session, Course, Percentage, Student, Enrollment, AttendanceRecord, GradeRecord, Professor
-import pandas as pd
-import io
+from flask import Flask, render_template, request, redirect, url_for, send_file, flash
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from load_db import University, Faculty, Career, Course, Teacher, Evaluation, Enrollment, GradeRecord, Student, AttendanceRecord
 
-# Flask Application
+import pandas as pd
+from io import BytesIO
+from datetime import date
+
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = 'your_secret_key'  # Add a secret key for session management (important for flash messages)
+
+# Configuración de la base de datos
+config = {
+    'host': 'localhost',
+    'database_name': 'universitydb',
+    'user': 'root',
+    'password': 'rootpass'
+}
+engine = create_engine(
+    f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}/{config["database_name"]}', 
+    echo=False
+)
+
+Session = sessionmaker(bind=engine)
+session = Session()
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/courses')
-def courses():
-    session = Session()
-    courses = session.query(Course).all()
-    session.close()
-    return render_template('courses.html', courses=courses)
-
 @app.route('/university')
-def university():
-    return render_template('university.html')
+def view_university():
+    university = session.query(University).first()
+    if not university:
+        return render_template('university.html', university=None, faculties=[])
+    return render_template('university.html', university=university, faculties=university.faculties)
 
-@app.route('/application', methods=['GET'])
-def application():
-    query = request.args.get('query', '').strip()
-    session = Session()
-    results = {
-        'students': [],
-        'professors': [],
-        'courses': [],
-        'grades': []
-    }
+@app.route('/faculty/<int:faculty_id>')
+def view_faculty(faculty_id):
+    faculty = session.query(Faculty).get(faculty_id)
+    if not faculty:
+        return "Faculty not found", 404
+    return render_template('faculty.html', faculty=faculty, careers=faculty.careers)
 
-    if query:
-        # Search students by name or ID
-        results['students'] = session.query(Student).filter(
-            (Student.first_name.ilike(f"%{query}%")) |
-            (Student.last_name_paternal.ilike(f"%{query}%")) |
-            (Student.last_name_maternal.ilike(f"%{query}%")) |
-            (Student.rut.ilike(f"%{query}%"))
-        ).all()
+@app.route('/career/<int:career_id>')
+def view_career(career_id):
+    career = session.query(Career).get(career_id)
+    if not career:
+        return "Career not found", 404
+    return render_template('career.html', career=career, courses=career.courses)
 
-        # Search professors by name
-        results['professors'] = session.query(Professor).filter(
-            Professor.name.ilike(f"%{query}%")
-        ).all()
 
-        # Search courses by name
-        results['courses'] = session.query(Course).filter(
-            Course.name.ilike(f"%{query}%")
-        ).all()
+@app.route('/course/<int:course_id>')
+def view_course(course_id):
+    course = session.query(Course).get(course_id)
+    if not course:
+        return "Course not found", 404
 
-        # Search grades by student name or ID
-        results['grades'] = session.query(GradeRecord).join(Student).join(Percentage).filter(
-            (Student.first_name.ilike(f"%{query}%")) |
-            (Student.last_name_paternal.ilike(f"%{query}%")) |
-            (Student.last_name_maternal.ilike(f"%{query}%")) |
-            (Student.rut.ilike(f"%{query}%"))
-        ).all()
+    # Obtener la asistencia para la semana actual (supongamos que estamos trabajando con la semana 1)
+    week_attendance = {}
+    for enrollment in course.enrollments:
+        for class_number in range(1, course.classes_per_week + 1):
+            attendance = session.query(AttendanceRecord).filter_by(
+                student_id=enrollment.student.id,
+                course_id=course_id,
+                week=1,  # Aquí se ajusta la semana según corresponda
+                class_number=class_number
+            ).first()
+            week_attendance[(enrollment.student.id, class_number)] = attendance.attendance if attendance else False
 
-    session.close()
-    return render_template('application.html', query=query, results=results)
+    return render_template('view_course.html', course=course, evaluations=course.evaluations, week_attendance=week_attendance)
 
-@app.route('/add_course', methods=['GET', 'POST'])
-def add_course():
+
+
+@app.route('/add_course/<int:career_id>', methods=['GET', 'POST'])
+def add_course(career_id):
+    career = session.query(Career).get(career_id)
+    if not career:
+        return "Career not found", 404
+
     if request.method == 'POST':
-        course_name = request.form.get('course_name')
-        professor_names = request.form.getlist('professor_name')
-        eval_names = request.form.getlist('eval_name')
-        eval_percentages = request.form.getlist('eval_percentage')
-        eval_percentages = [float(p) for p in eval_percentages]
+        name = request.form['name']
+        teacher_id = request.form['teacher']
+        evaluations = request.form.getlist('eval_name')
+        percentages = request.form.getlist('eval_percentage')
 
-        if sum(eval_percentages) != 100:
-            flash('The total percentage must be exactly 100%. Please adjust the values.')
-            return redirect(url_for('add_course'))
+        if not name or not teacher_id:
+            return "Course name and teacher are required.", 400
 
-        if course_name and eval_names and eval_percentages:
-            session = Session()
-            new_course = Course(name=course_name)
+        try:
+            new_course = Course(name=name, teacher_id=int(teacher_id), career=career)
             session.add(new_course)
             session.commit()
 
-            for professor_name in professor_names:
-                existing_professor = session.query(Professor).filter_by(name=professor_name).first()
-                if not existing_professor:
-                    new_professor = Professor(name=professor_name)
-                    session.add(new_professor)
-                    session.commit()
-                    new_course.professors.append(new_professor)
-                else:
-                    new_course.professors.append(existing_professor)
-
-            for name, percentage in zip(eval_names, eval_percentages):
-                new_percentage = Percentage(name=name, percentage=percentage, course_id=new_course.id)
-                session.add(new_percentage)
+            # Add evaluations to the course
+            for eval_name, eval_percentage in zip(evaluations, percentages):
+                if eval_name and eval_percentage:
+                    try:
+                        eval_percentage = float(eval_percentage)
+                        new_evaluation = Evaluation(name=eval_name, percentage=eval_percentage, course=new_course)
+                        session.add(new_evaluation)
+                    except ValueError:
+                        return "Invalid percentage value.", 400
 
             session.commit()
-            session.close()
-            flash('Course, professors, and evaluations added successfully')
-            return redirect(url_for('index'))
+            return redirect(url_for('view_career', career_id=career.id))
+        except Exception as e:
+            session.rollback()
+            return f"An error occurred: {str(e)}", 500
 
-    return render_template('add_course.html')
+    teachers = session.query(Teacher).filter_by(faculty_id=career.faculty_id).all()
+    return render_template('add_course.html', career=career, teachers=teachers)
 
-@app.route('/course/<int:course_id>')
-def course_detail(course_id):
-    session = Session()
-    course = session.query(Course)\
-        .options(joinedload(Course.enrollments)
-                 .joinedload(Enrollment.student)
-                 .joinedload(Student.grades)
-                 .joinedload(GradeRecord.percentage))\
-        .options(joinedload(Course.percentages))\
-        .options(joinedload(Course.professors))\
-        .filter_by(id=course_id).first()
+@app.route('/add_teacher_redirect/<int:career_id>', methods=['GET', 'POST'])
+def add_teacher_redirect(career_id):
+    career = session.query(Career).get(career_id)
+    if not career:
+        return "Career not found", 404
 
-    if not course:
-        flash("Course not found.")
-        return redirect(url_for('index'))
+    faculty = career.faculty
 
-    percentages = course.percentages
-    enrollments = course.enrollments
-    professors = course.professors
-
-    # Calculate averages for each student
-    for enrollment in enrollments:
-        total = 0
-        total_percentage = 0
-        has_grades = False
-
-        for percentage in percentages:
-            grade_record = next((grade for grade in enrollment.student.grades if grade.percentage_id == percentage.id), None)
-            if grade_record and grade_record.grade is not None:
-                has_grades = True
-                total += grade_record.grade * (percentage.percentage / 100)
-                total_percentage += percentage.percentage
-
-        # Assign the average to the student if there are valid evaluations
-        enrollment.average = round(total, 2) if has_grades else 1.0
-
-    # Close the session after extracting all data
-    session.close()
-
-    return render_template(
-        'course_detail.html',
-        course=course,
-        percentages=percentages,
-        enrollments=enrollments,
-        professors=professors
-    )
-
-@app.route('/edit_evaluations/<int:course_id>', methods=['GET'])
-def edit_evaluations(course_id):
-    session = Session()
-    course = session.query(Course).filter_by(id=course_id).first()
-    percentages = session.query(Percentage).filter_by(course_id=course_id).all()
-    session.close()
-    return render_template('edit_evaluations.html', course=course, percentages=percentages)
-
-@app.route('/update_evaluations/<int:course_id>', methods=['POST'])
-def update_evaluations(course_id):
-    session = Session()
-    eval_names = request.form.getlist('eval_name')
-    eval_percentages = request.form.getlist('eval_percentage')
-    eval_percentages = [float(p) for p in eval_percentages]
-
-    if sum(eval_percentages) != 100:
-        flash('The total percentage must be exactly 100%. Please adjust the values.')
-        return redirect(url_for('edit_evaluations', course_id=course_id))
-
-    # Delete grades related to the course evaluations
-    existing_percentages = session.query(Percentage).filter_by(course_id=course_id).all()
-    for percentage in existing_percentages:
-        session.query(GradeRecord).filter_by(percentage_id=percentage.id).delete()
-
-    # Delete existing evaluations and add new ones
-    session.query(Percentage).filter_by(course_id=course_id).delete()
-    for name, percentage in zip(eval_names, eval_percentages):
-        new_percentage = Percentage(name=name, percentage=percentage, course_id=course_id)
-        session.add(new_percentage)
-
-    session.commit()
-    session.close()
-    flash('Evaluations updated successfully')
-    return redirect(url_for('course_detail', course_id=course_id))
-
-@app.route('/add_student/<int:course_id>', methods=['POST'])
-def add_student(course_id):
-    rut = request.form.get('rut')
-    first_name = request.form.get('first_name')
-    last_name_paternal = request.form.get('last_name_paternal')
-    last_name_maternal = request.form.get('last_name_maternal')
-
-    if rut and first_name and last_name_paternal and last_name_maternal:
-        session = Session()
-        existing_student = session.query(Student).filter_by(rut=rut).first()
-        if existing_student:
-            flash('The student with this ID is already registered.')
-        else:
-            new_student = Student(
-                rut=rut,
-                first_name=first_name,
-                last_name_paternal=last_name_paternal,
-                last_name_maternal=last_name_maternal
-            )
-            session.add(new_student)
+    if request.method == 'POST':
+        name = request.form['name']
+        last_name = request.form['last_name']
+        if not name or not last_name:
+            return "Name and last name are required.", 400
+        try:
+            new_teacher = Teacher(name=name, last_name=last_name, faculty=faculty)
+            session.add(new_teacher)
             session.commit()
-            new_enrollment = Enrollment(student_id=new_student.id, course_id=course_id, enrollment_date=date.today(), approval=False)
-            session.add(new_enrollment)
-            session.commit()
-            flash('Student added successfully')
-        session.close()
-    else:
-        flash('Please fill in all fields.')
-    return redirect(url_for('course_detail', course_id=course_id))
+            return redirect(url_for('add_course', career_id=career.id))
+        except Exception as e:
+            session.rollback()
+            return f"An error occurred: {str(e)}", 500
 
-@app.route('/mark_attendance/<int:student_id>/<int:course_id>/<int:week>', methods=['POST'])
-def mark_attendance(student_id, course_id, week):
-    session = Session()
-    attendance = 'attendance' in request.form
+    return render_template('add_teacher_redirect.html', faculty=faculty, career=career)
 
-    existing_record = session.query(AttendanceRecord).filter_by(student_id=student_id, course_id=course_id, week=week).first()
-    if existing_record:
-        existing_record.attendance = attendance
-    else:
-        new_record = AttendanceRecord(student_id=student_id, course_id=course_id, week=week, attendance=attendance)
-        session.add(new_record)
+@app.route('/add_grade/<int:student_id>/<int:evaluation_id>/<int:course_id>', methods=['POST'])
+def add_grade(student_id, evaluation_id, course_id):
+    grade_value = request.form.get('grade')
+    if not grade_value:
+        return "Invalid grade", 400
 
-    session.commit()
-    session.close()
-    flash('Attendance recorded successfully')
-    return redirect(url_for('course_detail', course_id=course_id))
-
-@app.route('/add_grade/<int:student_id>/<int:percentage_id>/<int:course_id>', methods=['POST'])
-def add_grade(student_id, percentage_id, course_id):
     try:
-        grade = float(request.form.get('grade'))
+        # Obtener la inscripción del estudiante en el curso
+        enrollment = session.query(Enrollment).filter_by(student_id=student_id, course_id=course_id).first()
+        if not enrollment:
+            return "Enrollment not found", 404
 
-        # Handle errors for incorrect input (e.g., 65 -> 6.5)
-        if grade > 7.0:
-            grade = round(grade / 10, 1)
-        elif grade < 1.0:
-            grade = 1.0
-
-        session = Session()
-        existing_record = session.query(GradeRecord).filter_by(student_id=student_id, percentage_id=percentage_id).first()
-        if existing_record:
-            existing_record.grade = grade
+        # Obtener la evaluación específica para el curso
+        grade_record = session.query(GradeRecord).filter_by(student_id=student_id, evaluation_id=evaluation_id).first()
+        
+        # Si ya existe una calificación, la actualizamos, si no, creamos una nueva
+        if grade_record:
+            grade_record.grade = float(grade_value)
         else:
-            new_grade = GradeRecord(student_id=student_id, percentage_id=percentage_id, grade=grade)
+            new_grade = GradeRecord(student_id=student_id, evaluation_id=evaluation_id, grade=float(grade_value))
             session.add(new_grade)
 
-        session.commit()
-        session.close()
-        flash('Grade added successfully')
-    except ValueError:
-        flash('Please enter a valid grade.')
-    return redirect(url_for('course_detail', course_id=course_id))
+        session.commit()  # Guardar o actualizar la calificación
 
-@app.route('/download_grades/<int:course_id>', methods=['GET'])
-def download_grades(course_id):
-    session = Session()
-    course = session.query(Course).filter_by(id=course_id).first()
-    enrollments = course.enrollments
-    percentages = course.percentages
+        # Ahora recalculamos el promedio del estudiante para este curso
+        total_percentage = 0
+        weighted_sum = 0
+        grades_entered = 0
 
-    # Create a list to store the data
-    data = []
-    headers = ['Student'] + [f"{percentage.name} ({percentage.percentage}%)" for percentage in percentages] + ['Average']
+        # Obtener todas las evaluaciones para este curso
+        course = session.query(Course).get(course_id)
+        if not course:
+            return "Course not found", 404
 
-    # Fill in the data with student information and their grades
-    for enrollment in enrollments:
-        student = enrollment.student
-        row = [f"{student.first_name} {student.last_name_paternal} {student.last_name_maternal}"]
-        total = 0
-        has_grades = False
-        for percentage in percentages:
-            grade_record = next((grade for grade in student.grades if grade.percentage_id == percentage.id), None)
+        for evaluation in course.evaluations:
+            # Obtener la calificación del estudiante en esta evaluación
+            grade_record = session.query(GradeRecord).filter_by(student_id=student_id, evaluation_id=evaluation.id).first()
             if grade_record and grade_record.grade is not None:
-                row.append(grade_record.grade)
-                total += grade_record.grade * (percentage.percentage / 100)
-                has_grades = True
-            else:
-                row.append('')
-        row.append(round(total, 2) if has_grades else 1.0)
+                weighted_sum += grade_record.grade * evaluation.percentage / 100
+                total_percentage += evaluation.percentage
+                grades_entered += 1
+
+        # Si todas las calificaciones están presentes y el total de los porcentajes es 100, actualizar el promedio
+        if grades_entered == len(course.evaluations) and total_percentage == 100:
+            enrollment.average = weighted_sum  # Actualizar el promedio ponderado
+        else:
+            enrollment.average = 1.0  # Si faltan calificaciones o el porcentaje no es 100, asignar un promedio de 1.0
+
+        session.commit()  # Confirmar los cambios
+
+        # Redirigir al curso donde se encuentra el estudiante
+        return redirect(url_for('view_course', course_id=course_id))
+    except Exception as e:
+        session.rollback()
+        return f"An error occurred: {str(e)}", 500
+
+@app.route('/download_grades/<int:course_id>')
+def download_grades(course_id):
+    course = session.query(Course).get(course_id)
+    if not course:
+        return "Course not found", 404
+
+    data = []
+    for enrollment in course.enrollments:
+        student = enrollment.student
+        grades = {evaluation.name: next((gr.grade for gr in student.grades if gr.evaluation_id == evaluation.id), '') for evaluation in course.evaluations}
+        average = sum([gr.grade * (evaluation.percentage / 100) for evaluation in course.evaluations if (gr := next((g for g in student.grades if g.evaluation_id == evaluation.id), None))]) / 1
+        row = {
+            'Student Name': f"{student.name} {student.last_name}",
+            **grades,
+            'Average': round(average, 2) if average else ''
+        }
         data.append(row)
 
-    # Create the DataFrame
-    df = pd.DataFrame(data, columns=headers)
-
-    # Save the DataFrame to an Excel file in memory
-    output = io.BytesIO()
+    # Crear archivo XLSX usando pandas
+    df = pd.DataFrame(data)
+    output = BytesIO()
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Grades')
-    output.seek(0)
 
-    # Download the file
-    session.close()
-    return send_file(output, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', as_attachment=True, download_name=f'grades_course_{course.name}.xlsx')
+    output.seek(0)
+    return send_file(output, download_name=f"grades_{course.name}.xlsx", as_attachment=True)
+
+@app.route('/students')
+def students_page():
+    return render_template('students.html')
+
+@app.route('/students/register', methods=['GET', 'POST'])
+def register_student():
+    if request.method == 'POST':
+        name = request.form['name']
+        last_name = request.form['last_name']
+        rut = request.form['rut']
+        career_id = request.form['career_id']
+
+        if not name or not last_name or not rut or not career_id:
+            return "All fields are required.", 400
+
+        try:
+            new_student = Student(name=name, last_name=last_name, career_id=int(career_id))
+            session.add(new_student)
+            session.commit()
+            return redirect(url_for('students_page'))
+        except Exception as e:
+            session.rollback()
+            return f"An error occurred: {str(e)}", 500
+
+    faculties = session.query(Faculty).all()
+    return render_template('register_student.html', faculties=faculties)
+
+@app.route('/get_careers/<int:faculty_id>')
+def get_careers(faculty_id):
+    faculty = session.query(Faculty).get(faculty_id)
+    if not faculty:
+        return {"careers": []}, 404
+    
+    careers = [{"id": career.id, "name": career.name} for career in faculty.careers]
+    return {"careers": careers}
+
+@app.route('/students/enroll', methods=['GET', 'POST'])
+def enroll_student():
+    if request.method == 'POST':
+        student_id = request.form['student_id']
+        course_ids = request.form.getlist('course_id')  # Obtener una lista de cursos
+
+        if not student_id or not course_ids:
+            return "Student and at least one course are required.", 400
+
+        try:
+            # Inscribir al estudiante en cada uno de los cursos seleccionados
+            for course_id in course_ids:
+                enrollment = Enrollment(
+                    student_id=int(student_id),
+                    course_id=int(course_id),
+                    enrollment_date=date.today(),
+                    approval=False
+                )
+                session.add(enrollment)
+
+            session.commit()
+            return redirect(url_for('students_page'))
+        except Exception as e:
+            session.rollback()
+            return f"An error occurred: {str(e)}", 500
+
+    students = session.query(Student).all()
+    # Obtener cursos por estudiante
+    student_courses = {}  # Diccionario de cursos filtrados por carrera
+    for student in students:
+        # Pasar solo los valores que pueden ser serializados en JSON (id y name)
+        student_courses[student.id] = [
+            {"id": course.id, "name": course.name} for course in student.career.courses
+        ]
+
+    return render_template('enroll_student.html', students=students, student_courses=student_courses)
+
+@app.route('/mark_attendance/<int:course_id>/<int:week>', methods=['POST'])
+def mark_attendance(course_id, week):
+    course = session.query(Course).get(course_id)
+    if not course:
+        return "Course not found", 404
+
+    # Obtener la lista de estudiantes inscritos en el curso
+    students = course.enrollments
+
+    # Recoger los datos de la asistencia (de los radio buttons)
+    attendance_data = request.form
+
+    # Guardar la asistencia para cada estudiante
+    for enrollment in students:
+        for class_number in range(1, course.classes_per_week + 1):
+            attendance_key = f"attendance_{enrollment.student.id}_class_{class_number}"
+            attendance_value = attendance_data.get(attendance_key)
+
+            if attendance_value:
+                attendance = AttendanceRecord(
+                    student_id=enrollment.student.id,
+                    course_id=course_id,
+                    attendance=attendance_value,  # P o A
+                    week=week
+                )
+                session.add(attendance)
+    
+    # Commit the changes to the database
+    session.commit()
+
+    return redirect(url_for('view_course', course_id=course.id))  # Redirige a la página del curso
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

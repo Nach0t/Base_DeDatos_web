@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ career.name }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">{{ career.name }}</h1>
+      <section>
+        <h2 class="sub-header">Courses</h2>
+        {% if courses %}
+        <ul class="course-list">
+          {% for course in courses %}
+          <li class="course-item">
+            <a
+              href="{{ url_for('view_course', course_id=course.id) }}"
+              class="course-link"
+            >
+              {{ course.name }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No courses found for this career.</p>
+        {% endif %}
+      </section>
+
+      <div class="actions">
+        <a
+          href="{{ url_for('add_course', career_id=career.id) }}"
+          class="button add-course-button"
+        >
+          + Add Course
+        </a>
+      </div>
+
+      <!-- Back Buttons Section -->
+      <div class="back-buttons">
+        <!-- Back to Home -->
+        <a href="{{ url_for('index') }}" class="button back-home-button">
+          &#8592; Back to Home
+        </a>
+
+        <!-- Back to Previous Page -->
+        <button
+          onclick="window.history.back()"
+          class="button back-previous-button"
+        >
+          &#8592; Back to Previous Page
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
