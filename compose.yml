@@ -1,8 +1,18 @@
 services:
-
-  flask:
-    build: .
+  mysql:
+    image: mysql:9.0.1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: universitydb
+    ports:
+      - "3306:3306"
     volumes:
+      - ./mysql-data:/var/lib/mysql
+  flask: 
+    build: .
+    volumes: 
       - ./app:/app
     ports:
       - "5000:5000"
+    
