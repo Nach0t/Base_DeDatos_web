@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file, flash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from load_db import University, Faculty, Career, Course, Teacher, Evaluation, Enrollment, GradeRecord, Student, AttendanceRecord
 
 import pandas as pd
 from io import BytesIO
