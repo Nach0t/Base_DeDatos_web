@@ -19,7 +19,7 @@ config = {
     'password': 'rootpass'
 }
 engine = create_engine(
-    f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}:{config[port]}/{config["database_name"]}', 
+    f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}:{config["port"]}/{config["database_name"]}', 
     echo=False
 )
 
