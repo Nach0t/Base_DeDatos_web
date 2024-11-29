@@ -9,7 +9,6 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
-    command: bash -c "apt-get update && apt-get install -y nano iputils-ping && mysqld"
   flask: 
     build: .
     volumes: 
