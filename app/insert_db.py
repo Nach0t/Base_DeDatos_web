@@ -3,8 +3,17 @@ from sqlalchemy import create_engine
 from load_db import University, Faculty, Career, Course, Teacher, Student, Evaluation, GradeRecord, AttendanceRecord
 
 # Configurar la conexión con la base de datos
-config = {'host': 'localhost', 'database_name': 'universitydb', 'user': 'root', 'password': 'rootpass'}
-engine = create_engine(f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}/{config["database_name"]}', echo=False)
+config = {
+    'host': 'mysql',
+    'database_name': 'universitydb',
+    'user': 'root',
+    'password': 'rootpass'
+}
+
+engine = create_engine(
+    f'mysql+pymysql://{config["user"]}:{config["password"]}@{config["host"]}/{config["database_name"]}', 
+    echo=False
+)
 
 Session = sessionmaker(bind=engine)
 session = Session()
