@@ -132,8 +132,10 @@ class AttendanceRecord(Base):
     course = relationship('Course', back_populates='attendances')
 
 
-
+try:
 # Crear las tablas en la base de datos
-Base.metadata.create_all(engine)
-
-print("Tablas creadas con éxito.")
+    Base.metadata.create_all(engine)
+except: 
+    print("Error en la creación de las tablas")
+finally:
+    print("Tablas creadas con éxito.")
