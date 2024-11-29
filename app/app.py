@@ -12,7 +12,7 @@ app.secret_key = 'your_secret_key'  # Add a secret key for session management (i
 
 # Configuración de la base de datos
 config = {
-    'host': '20.81.150.87',
+    'host': 'localhost',
     'port': '3306',
     'database_name': 'universitydb',
     'user': 'root',
