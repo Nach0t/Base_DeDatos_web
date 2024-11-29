@@ -135,7 +135,7 @@ class AttendanceRecord(Base):
 try:
 # Crear las tablas en la base de datos
     Base.metadata.create_all(engine)
+    print("Tablas creadas con éxito.")
 except: 
     print("Error en la creación de las tablas")
-finally:
-    print("Tablas creadas con éxito.")
+    
