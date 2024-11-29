@@ -1,0 +1,224 @@
+/* General styling for the application background and text */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #2a2e35;
+  /* Dark gray background */
+  color: #e4e6eb;
+  /* Light text color */
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main container styling for central content */
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 40px;
+  background: #2d333b;
+  /* Darker background for the container */
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  /* White text color for good contrast */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styling for headers inside the container */
+.header {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Styling for course list */
+.course-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.course-item {
+  margin-bottom: 15px;
+}
+
+.course-link {
+  color: #238636;
+  /* Green color for course links */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.course-link:hover {
+  color: #2ea043;
+  transform: scale(1.05);
+}
+
+/* Buttons */
+.button {
+  background-color: #238636;
+  /* Green button color */
+  color: #ffffff;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.button:hover {
+  background-color: #2ea043;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  background-color: #1e7d33;
+  transform: translateY(2px);
+}
+
+/* Evaluation Section */
+.evaluations {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.evaluation-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 90%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.delete-button {
+  background-color: #d9534f;
+  /* Red for delete button */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c9302c;
+  /* Darker red on hover */
+}
+
+/* Total Percentage Styling */
+.total-percentage {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+/* Error messages styling */
+.error-message {
+  color: #f85149;
+  /* Red color for error messages */
+  font-weight: bold;
+  display: none;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+  color: #007bff;
+  padding: 10px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Styling for tables */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 1rem;
+  text-align: left;
+  background: #2d333b;
+  border-radius: 8px;
+  color: #e4e6eb;
+}
+
+.styled-table thead tr {
+  background-color: #238636;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #444;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #373e47;
+}
+
+/* Buttons container */
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.buttons .button {
+  padding: 12px 24px;
+  font-size: 16px;
+  color: white;
+  background-color: #238636;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.buttons .button:hover {
+  background-color: #2ea043;
+}
+
+.buttons .back-previous-button {
+  background-color: #f44336;
+}
+
+.buttons .back-previous-button:hover {
+  background-color: #e53935;
+}
+
+.course-id {
+  font-size: 0.9em;
+  color: gray;
+  margin-left: 10px;
+}
