@@ -4,7 +4,7 @@ from load_db import University, Faculty, Career, Course, Teacher, Student, Evalu
 
 # Configurar la conexión con la base de datos
 config = {
-    'host': 'mysql',
+    'host': 'localhost',
     'database_name': 'universitydb',
     'user': 'root',
     'password': 'rootpass'
