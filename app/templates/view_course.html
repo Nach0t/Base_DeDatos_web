@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ course.name }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Title with course name and ID -->
+      <h1 class="header">
+        {{ course.name }} <span class="course-id">(ID: {{ course.id }})</span>
+      </h1>
+
+      <p>
+        <strong>Teacher:</strong> {{ course.teacher.name }} {{
+        course.teacher.last_name }}
+      </p>
+
+      <!-- Evaluations Section -->
+      <h2>Evaluations</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Evaluation</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for evaluation in course.evaluations %}
+          <tr>
+            <td>{{ evaluation.name }}</td>
+            <td>{{ evaluation.percentage }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Grades Section -->
+      <h2>Grades</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            {% for evaluation in course.evaluations %}
+            <th>{{ evaluation.name }} ({{ evaluation.percentage }}%)</th>
+            {% endfor %}
+            <th>Average</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for enrollment in course.enrollments %}
+          <tr>
+            <td>
+              {{ enrollment.student.name }} {{ enrollment.student.last_name }}
+            </td>
+            {% for evaluation in course.evaluations %}
+            <td>
+              <form
+                action="{{ url_for('add_grade', course_id=course.id, student_id=enrollment.student.id, evaluation_id=evaluation.id) }}"
+                method="POST"
+              >
+                {% set grade = enrollment.student.grades |
+                selectattr('evaluation_id', 'equalto', evaluation.id) | first %}
+                <input
+                  type="number"
+                  name="grade"
+                  class="input-field"
+                  min="1.0"
+                  max="7.0"
+                  step="0.1"
+                  value="{{ grade.grade if grade else '1.0' }}"
+                  required
+                />
+                <button type="submit" class="button">Save</button>
+              </form>
+            </td>
+            {% endfor %}
+            <td>
+              {% if enrollment.average is not none %} {{ enrollment.average |
+              round(2) }} {% else %} 1.0 {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Download Grades Section -->
+      <div class="buttons">
+        <a
+          href="{{ url_for('download_grades', course_id=course.id) }}"
+          class="button"
+        >
+          Download Grades as XLSX
+        </a>
+      </div>
+
+      <!-- Weeks Section -->
+      <h2>Weeks</h2>
+      <div
+        class="weeks"
+        style="display: flex; flex-wrap: wrap; justify-content: space-between"
+      >
+        {% for week in range(1, course.weeks + 1) %}
+        <button
+          class="week-button"
+          onclick="showAttendance({{ week }})"
+          style="
+            margin: 5px;
+            padding: 10px;
+            width: 120px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          "
+        >
+          Week {{ week }}
+        </button>
+        {% endfor %}
+      </div>
+
+      <!-- Attendance Section -->
+      <div id="attendance-section" style="display: none">
+        <h3>Mark Attendance for Week <span id="current-week"></span></h3>
+        <form
+          method="POST"
+          action="{{ url_for('mark_attendance', course_id=course.id, week=1) }}"
+        >
+          <div id="attendance-list">
+            {% for enrollment in course.enrollments %}
+            <div class="attendance-row">
+              <label
+                >{{ enrollment.student.name }} {{ enrollment.student.last_name
+                }}</label
+              >
+              {% for class in range(1, course.classes_per_week + 1) %}
+              <div class="attendance-option">
+                <label
+                  for="attendance_{{ enrollment.student.id }}_class_{{ class }}_p"
+                  >P</label
+                >
+                <input
+                  type="radio"
+                  name="attendance_{{ enrollment.student.id }}_class_{{ class }}"
+                  value="P"
+                  id="attendance_{{ enrollment.student.id }}_class_{{ class }}_p"
+                />
+                <label
+                  for="attendance_{{ enrollment.student.id }}_class_{{ class }}_a"
+                  >A</label
+                >
+                <input
+                  type="radio"
+                  name="attendance_{{ enrollment.student.id }}_class_{{ class }}"
+                  value="A"
+                  id="attendance_{{ enrollment.student.id }}_class_{{ class }}_a"
+                />
+                <span>Class {{ class }}</span>
+              </div>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+          <button type="submit" class="button">Save Attendance</button>
+        </form>
+      </div>
+
+      <!-- Back Section -->
+      <div class="back-button" style="text-align: center; margin-top: 20px">
+        <a
+          href="{{ url_for('view_career', career_id=course.career.id) }}"
+          class="button"
+          >Back to Career</a
+        >
+      </div>
+    </div>
+
+    <script>
+      function showAttendance(week) {
+        document.getElementById("current-week").innerText = week;
+        document.getElementById("attendance-section").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

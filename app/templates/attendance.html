@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance for Week {{ week }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">
+        Mark Attendance for Week {{ week }} - {{ course.name }}
+      </h1>
+      <p>Mark the attendance of each student for this week:</p>
+
+      <!-- Attendance Form Section -->
+      <form method="POST">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Attendance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for enrollment in course.enrollments %}
+            <tr>
+              <td>
+                {{ enrollment.student.name }} {{ enrollment.student.last_name }}
+              </td>
+              <td>
+                <input type="checkbox" name="attendance_{{ enrollment.student.id
+                }}" {% if enrollment.student.attendances | selectattr('week',
+                'equalto', week) | selectattr('attendance', 'true') | list %}
+                checked {% endif %} />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button">Save Attendance</button>
+      </form>
+
+      <a
+        href="{{ url_for('view_course', course_id=course.id) }}"
+        class="back-link"
+        >Back to Course</a
+      >
+    </div>
+  </body>
+</html>

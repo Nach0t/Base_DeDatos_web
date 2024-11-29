@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">{{ faculty.name }}</h1>
+      <h2 class="sub-header">Careers</h2>
+      <ul class="course-list">
+        {% for career in careers %}
+        <li class="course-item">
+          <a
+            href="{{ url_for('view_career', career_id=career.id) }}"
+            class="course-link"
+          >
+            {{ career.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <!-- Back Button -->
+      <div class="back-buttons">
+        <a
+          href="{{ url_for('view_university') }}"
+          class="button back-home-button"
+        >
+          &#8592; Back to University
+        </a>
+        <button
+          onclick="window.history.back()"
+          class="button back-previous-button"
+        >
+          &#8592; Back to Previous Page
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

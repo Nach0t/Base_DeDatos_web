@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header">Welcome to the Course Management Application</h1>
+      <p>
+        This application allows you to manage courses, add students, assign
+        professors, and track student grades and attendance. Below are the main
+        features of this platform:
+      </p>
+      <ul>
+        <li>Add and manage university courses.</li>
+        <li>Assign professors to courses.</li>
+        <li>Add students to courses and record their evaluations.</li>
+        <li>Register and monitor student attendance.</li>
+        <li>
+          Automatically calculate each student's average based on evaluations.
+        </li>
+      </ul>
+      <p>
+        Use the navigation menu to access different sections of the application.
+      </p>
+      <div class="navigation-section">
+        <a href="{{ url_for('view_university') }}" class="button"
+          >View University</a
+        >
+        <a href="{{ url_for('students_page') }}" class="button">Students</a>
+      </div>
+    </div>
+  </body>
+</html>

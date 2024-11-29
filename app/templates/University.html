@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      {% if university %}
+      <h1 class="header">{{ university.name }}</h1>
+      <ul class="course-list">
+        {% for faculty in faculties %}
+        <li class="course-item">
+          <a
+            href="{{ url_for('view_faculty', faculty_id=faculty.id) }}"
+            class="course-link"
+          >
+            {{ faculty.name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h1 class="header">No University Found</h1>
+      <p>Please add a university to the database.</p>
+      {% endif %}
+
+      <!-- Back Button -->
+      <div class="back-buttons">
+        <a href="{{ url_for('index') }}" class="button back-home-button">
+          &#8592; Back to Home
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
