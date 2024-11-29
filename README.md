@@ -36,10 +36,12 @@
   
 Install the required dependencies:
 ```bash
-python -m pip install flask Flask-SQLAlchemy SQLAlchemy mysqlclient PyMySQL
+python -m pip install flask Flask-SQLAlchemy SQLAlchemy mysqlclient PyMySQL pandas
 ```
 
-## How to Run the proyect
+# How to Run the proyect
+
+## If you use Windows
 
 ### First Step: Open Docker Desktop
 
@@ -57,20 +59,76 @@ docker compose up
 ### Third Step: Set up the database (use for example)
 ```bash
 cd ./database/
-python CreateDataBase.py
+python load.py
 ```
 
-### Fourth Step: Run Flask
+
+### fourth Step: Set up the database (use for example)
+```bash
+cd ./database/
+python insert.py
+```
+
+### fifth Step: Run Flask
 ```bash
 flask run
 ```
 
-### Fifth Step: Open in your browser
+### sixth Step: Open in your browser
 ```bash
 http://127.0.0.1:5000/
 ```
+
 ### Using the aplication
 Navigate through the following sections in the web application:
+
+
+# If you use a azure:
+
+### First Step: create enviaroments
+```bash
+cd enviroments/
+```
+
+```bash
+source my_env/bin/activate
+```
+
+### Second Step: clone the proyect
+```bash
+cd gitHub/Base_DeDatos_web/
+```
+
+### Trirh Step: Open Docker Desktop
+
+#### If you don't have MySQL installed, execute:
+```bash
+docker pull mysql:9.0.1
+```
+
+### Fouth Step: Start the Docker containers
+```bash
+cd ./docker/
+docker compose up
+```
+
+### fifth Step: Set up the database (use for example)
+```bash
+cd ./database/
+python load.py
+```
+
+
+### sixth Step: Set up the database (use for example)
+```bash
+cd ./database/
+python insert.py
+```
+
+### seventh Step: Set up the database (use for example)
+```bash
+flask run --host=0.0.0.0 --port=5000
+```
 
 
 ### Project Members

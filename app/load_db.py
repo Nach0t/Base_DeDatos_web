@@ -5,7 +5,7 @@ from sqlalchemy import text
 
 # Configuración de la base de datos
 config = {
-    'host': 'mysql',
+    'host': 'localhost',
     'port': '3306',
     'database_name': 'universitydb',
     'user': 'root',
