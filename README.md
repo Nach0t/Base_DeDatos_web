@@ -83,9 +83,9 @@ http://127.0.0.1:5000/
 Navigate through the following sections in the web application:
 
 
-#If you use a azure:
+# If you use a azure:
 
-### fifth Step: 
+### First Step: create enviaroments
 ```bash
 cd enviroments/
 ```
@@ -94,38 +94,38 @@ cd enviroments/
 source my_env/bin/activate
 ```
 
-### sixth Step: 
+### Second Step: clone the proyect
 ```bash
 cd gitHub/Base_DeDatos_web/
 ```
 
-### First Step: Open Docker Desktop
+### Trirh Step: Open Docker Desktop
 
 #### If you don't have MySQL installed, execute:
 ```bash
 docker pull mysql:9.0.1
 ```
 
-### Second Step: Start the Docker containers
+### Fouth Step: Start the Docker containers
 ```bash
 cd ./docker/
 docker compose up
 ```
 
-### Third Step: Set up the database (use for example)
+### fifth Step: Set up the database (use for example)
 ```bash
 cd ./database/
 python load.py
 ```
 
 
-### fourth Step: Set up the database (use for example)
+### sixth Step: Set up the database (use for example)
 ```bash
 cd ./database/
 python insert.py
 ```
 
-### fourth Step: Set up the database (use for example)
+### seventh Step: Set up the database (use for example)
 ```bash
 flask run --host=0.0.0.0 --port=5000
 ```
