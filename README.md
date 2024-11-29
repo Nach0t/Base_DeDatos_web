@@ -1,32 +1,45 @@
 # Web Database by NotaMaster
 
-## Description:
+## Project Overview:
 
-* This web application manages a university system where you can search and analyze students, teachers, courses, grades and attendance. The application is built with Flask and uses SQLAlchemy to connect to a MySQL database.
+* A web application designed to manage and administer university courses. It allows you to assign professors, enroll students, register evaluations, monitor attendance, and calculate student averages.
 
-## Characteristics:
+## Main Features:
 
-- **Search for students, teachers and courses**: A dynamic search can be carried out by first name, last name or course in different entities of the database (students, teachers, courses, faculties, etc.).
+- **Course Management**:
+  * Add new courses.
+  * Assign professors to courses.
+  * Enroll students in courses.
   
-- **Grade Record**: Student grades can be consulted, filtered by student or course name.
+- **Evaluation and Grades**:
+  * Register evaluations with assigned percentages.
+  * Assign grades to students.
+  * Automatically calculate student averages.
 
-- **Performance analysis**: The `/analysis` path allows you to perform an analysis of the general performance of a student or in a specific course, displaying a distribution of the results in a graphical way (using the `perform_analysis` function).
+- **Attendance**:
+  * Record student attendance.
+    
+- **System entities**:
+   * University, faculties, careers, courses, students, and professors.
 
-- **Contact Form**: Includes a contact page managed through a blueprint (`contact_bp`).
-
-
+### Technologies Used
+* **Backend**: Flask (python)
+* **Database**: SQLAlchemy
+* **Frontend**: HTML, CSS, JavaScript
+ 
 ### What You Need to Run the Project:
 
 ## Requirements
 * Python 3.8 or higher
 * Docker Desktop
 * mysql:9.0.1
-
+  
+Install the required dependencies:
 ```bash
 python -m pip install flask Flask-SQLAlchemy SQLAlchemy mysqlclient PyMySQL
 ```
 
-## How to Run
+## How to Run the proyect
 
 ### First Step: Open Docker Desktop
 
@@ -56,6 +69,9 @@ flask run
 ```bash
 http://127.0.0.1:5000/
 ```
+### Using the aplication
+Navigate through the following sections in the web application:
+
 
 ### Project Members
 * Ignacio Rehbein
