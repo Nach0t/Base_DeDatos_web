@@ -12,7 +12,7 @@ app.secret_key = 'your_secret_key'  # Add a secret key for session management (i
 
 # Configuración de la base de datos
 config = {
-    'host': 'mysql',
+    'host': '172.19.0.2',
     'port': '3306',
     'database_name': 'universitydb',
     'user': 'root',
